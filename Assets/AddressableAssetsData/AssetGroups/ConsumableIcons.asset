@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: SkinIcons
+  m_Name: ConsumableIcons
   m_EditorClassIdentifier: 
-  m_GroupName: SkinIcons
+  m_GroupName: ConsumableIcons
   m_Data:
     m_SerializedData: []
-  m_GUID: 046c8bfc0f1578f44bc583442ecabfc3
+  m_GUID: 4471cac6998a1ea4598153372be2d255
   m_SerializeEntries:
-  - m_GUID: fecdd54edfe1a05468f6400ae778a5b4
-    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/SkinIcons.spriteatlas
+  - m_GUID: 040a2a99119455b4ab3b9c1e13d530c9
+    m_Address: consumableIcons
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: edf0c941834619e45ae39c3f38369ca6, type: 2}
-    - {fileID: 11400000, guid: 56d3f713523bba946b73d1b88b68baea, type: 2}
+    - {fileID: 11400000, guid: 24d0edcd0f152304ca1f35358ec58631, type: 2}
+    - {fileID: 11400000, guid: 8c7d00a7cd8834c4c80c862597a0fa4c, type: 2}

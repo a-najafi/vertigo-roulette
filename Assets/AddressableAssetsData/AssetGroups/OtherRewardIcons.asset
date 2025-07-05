@@ -10,20 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: SkinIcons
+  m_Name: OtherRewardIcons
   m_EditorClassIdentifier: 
-  m_GroupName: SkinIcons
+  m_GroupName: OtherRewardIcons
   m_Data:
     m_SerializedData: []
-  m_GUID: 046c8bfc0f1578f44bc583442ecabfc3
+  m_GUID: 3aa7d8f67321b3e488c6cf8410d867e4
   m_SerializeEntries:
-  - m_GUID: fecdd54edfe1a05468f6400ae778a5b4
-    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/SkinIcons.spriteatlas
+  - m_GUID: ed6d179f2da88374eb0c1d6f53a59ced
+    m_Address: bombIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 587c3a4dbfcf0134eb08c2bb6d044a00
+    m_Address: cashIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bd670c294fcb12c40823623c890ff51c
+    m_Address: goldIcon
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: edf0c941834619e45ae39c3f38369ca6, type: 2}
-    - {fileID: 11400000, guid: 56d3f713523bba946b73d1b88b68baea, type: 2}
+    - {fileID: 11400000, guid: 0acd5e7552cad2e499fab52a98645600, type: 2}
+    - {fileID: 11400000, guid: 54db43ce35208db44b9f5f10eb2eda1e, type: 2}

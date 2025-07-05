@@ -16,11 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: e83b71608781381418efd890af98ee0d
-  m_SerializeEntries:
-  - m_GUID: fecdd54edfe1a05468f6400ae778a5b4
-    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/SkinIcons.spriteatlas
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
   m_SchemaSet:
