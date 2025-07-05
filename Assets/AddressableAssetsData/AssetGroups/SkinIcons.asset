@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SkinIcons
+  m_EditorClassIdentifier: 
+  m_GroupName: SkinIcons
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 60d4916d9b93f3b48be0507653323406
+  m_SerializeEntries:
+  - m_GUID: cea5d62b923ad274f9806f0000ed8d3b
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/ui_icon_baseball_cap_easter.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c2764ca799c71ea4fafdd8e9a0509ac4
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/UI_Icon_Renders_tier2_rifle.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0427102ad0b1c334390db0b264e2e002
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/UI_Icon_Renders_tier3_sniper.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1498d41e86496ac42a26d31433a7311e
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/UI_Icon_Renders_tier1_shotgun.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8649c71085f4eb54fb6e6145c68a05a3
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/UI_Icon_Renders_tier2_mle.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: febfcc66d3ce309489dfd77a77c468ec
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/ui_icon_helmet_pumpkin.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bba386a876ec698468c1a626305dbb27
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/UI_Icon_Renders_tier3_smg.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6fb1057195615e74c9e2476e2a25e49a
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/ui_icon_mle_bayonet_easter_time.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 29e6e70218f12ce499ff41616641ae3f
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/UI_Icon_Renders_tier3_shotgun.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6f30369f80f630749aebd8223a29cb9d
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/ui_icon_mle_bayonet_summer_vice.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 228d369f1fd577346b52e446d609a173
+    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/ui_icon_aviator_glasses_easter.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: da20c4ffbc87ef8489397b9994a5d145, type: 2}
+    - {fileID: 11400000, guid: d45000d8ce45ecc449e4bfc46487d991, type: 2}
