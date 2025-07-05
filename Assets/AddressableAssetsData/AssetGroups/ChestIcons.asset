@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ChestIcons
+  m_EditorClassIdentifier: 
+  m_GroupName: ChestIcons
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f762e34bacc862a4ca98f182135f52d2
+  m_SerializeEntries:
+  - m_GUID: 7cb35677544e8e24cb20f5b41ad8f759
+    m_Address: chestIcons
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: bb51673e623d6de4cbdb17b34e20582d, type: 2}
+    - {fileID: 11400000, guid: e44f06a5196a04046bdfe2f3829e63d6, type: 2}

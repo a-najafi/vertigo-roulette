@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SkinIcons
+  m_Name: sa_SkinIcons
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -74,5 +74,5 @@ SpriteAtlas:
   - ui_icon_mle_bayonet_summer_vice
   - ui_icon_aviator_glasses_easter
   m_RenderDataMap: {}
-  m_Tag: SkinIcons
+  m_Tag: sa_SkinIcons
   m_IsVariant: 0
