@@ -48,6 +48,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 076658a74dca4694dbacb6cc471d2500, type: 2}
   - {fileID: 11400000, guid: 666f7e4b4422c204ab4a1425f0bef6fd, type: 2}
   - {fileID: 11400000, guid: dd89a9ccb431fed41a049dfab9e7694e, type: 2}
+  - {fileID: 11400000, guid: 07b8ad4fa26a8e9438cee612abe65b70, type: 2}
+  - {fileID: 11400000, guid: 002641be30219ce4db4952b1a5476815, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -89,6 +91,8 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - ActivePlayerSessionStartConfig
+    - TestModePlayerSessionConfig
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9ae34ed9094d0e444ac2992f12d1a498, type: 2}
