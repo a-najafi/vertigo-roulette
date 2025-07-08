@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbc608536eb4af28ab97686b1dd7335, type: 3}
   m_Name: New Item Definition
   m_EditorClassIdentifier: 
-  _idReadOnly: SomeItemDefinition
+  _uniqueId: SomeTEst
   _name: 
   _description: 
   _icon:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
+    m_AssetGUID: fecdd54edfe1a05468f6400ae778a5b4
+    m_SubObjectName: UI_Icon_Renders_tier2_mle
+    m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
   _type: 3

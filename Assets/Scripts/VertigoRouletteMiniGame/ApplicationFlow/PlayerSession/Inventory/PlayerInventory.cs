@@ -38,7 +38,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
     {
         
         [SerializeField]private List<PlayerInventoryItem> playerInventoryItems = new List<PlayerInventoryItem>();
-        private Dictionary<string, PlayerInventoryItem> playerInventory = null;
+        
         
         
 
@@ -50,8 +50,6 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
                 if (playerInventoryItems[i].ItemUniqueId.Equals(itemUniqueId))
                     return playerInventoryItems[i];
             }
-
-            throw new Exception("Invalid item unique id");
             return null;
         }
 
@@ -69,7 +67,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
         public bool DecreaseCount(string itemUniqueId, int amount)
         {
             PlayerInventoryItem playerInventoryItem = GetPlayerInventoryItem(itemUniqueId);
-            if (playerInventoryItem.Count < amount)
+            if (playerInventoryItem == null || playerInventoryItem.Count < amount)
                 return false;
             playerInventoryItem.Count -= amount;
             return true;

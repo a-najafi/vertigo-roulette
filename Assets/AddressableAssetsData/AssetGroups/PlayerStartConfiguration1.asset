@@ -10,24 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: PlayerStartConfiguration1
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: PlayerStartConfiguration1
   m_Data:
     m_SerializedData: []
-  m_GUID: e83b71608781381418efd890af98ee0d
+  m_GUID: 61afa1af36d7cb94c8f1371605670766
   m_SerializeEntries:
-  - m_GUID: 5891c68ec5b5cd84e9bf90df4e6e329e
-    m_Address: SomeTEstyyyyy
+  - m_GUID: e30ebc9957d3da44d9c1ba17600593d8
+    m_Address: PlayerSessionStartingConfig1
     m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 8a83da22173ee3741a881a073aaa38c9
-    m_Address: SomeItemTesting
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - ActivePlayerSessionStartConfig
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d8a442f2efe1416439e617e15ab8a40b, type: 2}
-    - {fileID: 11400000, guid: b55af53b7d4034b43b63b7812f161186, type: 2}
+    - {fileID: 11400000, guid: 1f6a2ba7f936cdb489f7a2e7e509c769, type: 2}
+    - {fileID: 11400000, guid: 1e046a0143045d44eac5fab4f02594c2, type: 2}
