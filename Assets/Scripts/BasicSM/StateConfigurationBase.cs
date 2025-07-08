@@ -8,7 +8,7 @@ namespace BasicSM
     public class StateConfigurationBase : IStateConfiguration
     {
         [SerializeField] StateComponentBase _state;
-        [SerializeField]private List<StateTransitionBase>  _serializedTransitions;
+        [SerializeReference, SerializeField]private List<StateTransitionBase>  _serializedTransitions;
 
         private List<IStateTransition>  _transitions = null;
         

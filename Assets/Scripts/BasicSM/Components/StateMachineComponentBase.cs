@@ -8,16 +8,17 @@ namespace BasicSM
 { 
     public class StateMachineComponentBase : MonoBehaviour, IStateMachine
     {
-        
+        [SerializeField] private bool _isPersistent = false;
         [SerializeField] private bool _startMachineOnStart = false;
         [SerializeField] private List<StateConfigurationBase> _serializedStateConfigurations = new List<StateConfigurationBase>();
         
-        private List<IStateConfiguration> stateConfigurations = new List<IStateConfiguration>();
+        private List<IStateConfiguration> stateConfigurations = null;
         private Dictionary<IState, int> cachedStateIndexes = new Dictionary<IState, int>();
 
+        
         private bool isInTransition = false;
         private bool isInitialized = false;
-        private int currentStateIndex = 0;
+        [SerializeField,ReadOnly]private int currentStateIndex = 0;
         
         
               
@@ -69,9 +70,9 @@ namespace BasicSM
             return -1;
         }
         
-        public IEnumerator Initialize(IStateMachine stateMachine)
+        public virtual IEnumerator Initialize(IStateMachine stateMachine)
         {
-            if(stateMachine == null)
+            if(_isPersistent)
                 DontDestroyOnLoad(gameObject);
             
             currentStateIndex = 0;
@@ -111,6 +112,7 @@ namespace BasicSM
                 }
             }
         }
+
 
 
         public IEnumerator Terminate()

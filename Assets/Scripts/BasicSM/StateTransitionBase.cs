@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BasicSM
 {
     [Serializable]
-    public class StateTransitionBase : IStateTransition
+    public abstract class StateTransitionBase : IStateTransition
     {
         [SerializeField] private StateComponentBase _state;
         
