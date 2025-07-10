@@ -10,92 +10,67 @@ using UnityEngine;
 
 namespace BasicSMEditor
 {
-
     [CustomPropertyDrawer(typeof(StateTransitionBase), true)]
     public class StateTransitionDrawer : PropertyDrawer
     {
-        private static List<Type> _derivedTypes;
+        private static List<Type> _transitionTypes;
         private static string[] _typeNames;
+        private const float PADDING = 6f;
+        private const float HEADER_HEIGHT = 18f;
+
+        private void EnsureTypeCache()
+        {
+            if (_transitionTypes != null) return;
+
+            _transitionTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(asm => asm.GetTypes())
+                .Where(t => typeof(StateTransitionBase).IsAssignableFrom(t) && !t.IsAbstract)
+                .ToList();
+
+            _typeNames = _transitionTypes.Select(t => t.Name).ToArray();
+        }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EnsureTypesLoaded();
+            EnsureTypeCache();
+            var typeRect = new Rect(position.x, position.y, position.width, HEADER_HEIGHT);
+            var boxRect = new Rect(position.x, position.y, position.width, GetPropertyHeight(property, label));
 
-            Rect dropdownRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
-            Rect fieldRect = new Rect(position.x, position.y + EditorGUIUtility.singleLineHeight + 2, position.width,
-                position.height - EditorGUIUtility.singleLineHeight - 2);
+            EditorGUI.DrawRect(boxRect, new Color(0.15f, 0.15f, 0.15f));
+            GUI.Box(boxRect, GUIContent.none);
 
             EditorGUI.BeginProperty(position, label, property);
 
-            int currentIndex = GetTypeIndex(property.managedReferenceFullTypename);
+            var currentType = property.managedReferenceValue?.GetType();
+            int currentIndex = Mathf.Max(0, _transitionTypes.FindIndex(t => t == currentType));
+            int newIndex = EditorGUI.Popup(typeRect, "Transition Type", currentIndex, _typeNames);
 
-// Draw dropdown or fallback
-            int newIndex;
-            if (currentIndex >= 0)
+            if ((property.managedReferenceValue == null || currentIndex != newIndex) && newIndex >= 0)
             {
-                newIndex = EditorGUI.Popup(dropdownRect, "Transition Type", currentIndex, _typeNames);
-            }
-            else
-            {
-                string fallbackLabel = ExtractTypeName(property.managedReferenceFullTypename);
-                EditorGUI.LabelField(dropdownRect, "Transition Type", fallbackLabel ?? "None");
-                newIndex = EditorGUI.Popup(new Rect(dropdownRect.x, dropdownRect.y + EditorGUIUtility.singleLineHeight, dropdownRect.width, dropdownRect.height), -1, _typeNames);
-            }
-
-
-            if (newIndex != currentIndex && newIndex >= 0)
-            {
-                property.managedReferenceValue = Activator.CreateInstance(_derivedTypes[newIndex]);
+                property.managedReferenceValue = Activator.CreateInstance(_transitionTypes[newIndex]);
                 property.serializedObject.ApplyModifiedProperties();
             }
 
-            // Draw the actual object fields
             if (property.managedReferenceValue != null)
             {
+                var contentRect = new Rect(position.x + PADDING, typeRect.yMax + 2, position.width - 2 * PADDING,
+                    EditorGUI.GetPropertyHeight(property, true) - HEADER_HEIGHT - PADDING);
                 EditorGUI.indentLevel++;
-                EditorGUI.PropertyField(fieldRect, property, GUIContent.none, true);
+                EditorGUI.PropertyField(contentRect, property, GUIContent.none, true);
                 EditorGUI.indentLevel--;
             }
 
             EditorGUI.EndProperty();
         }
-        private static string ExtractTypeName(string fullTypeName)
-        {
-            if (string.IsNullOrEmpty(fullTypeName)) return null;
-            string clean = fullTypeName.Split(',')[0];
-            int lastDot = clean.LastIndexOf('.');
-            return lastDot >= 0 ? clean.Substring(lastDot + 1) : clean;
-        }
-
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            if (property.managedReferenceValue == null)
-                return EditorGUIUtility.singleLineHeight + 4;
-
-            return EditorGUI.GetPropertyHeight(property, true) + EditorGUIUtility.singleLineHeight + 4;
-        }
-
-        private static void EnsureTypesLoaded()
-        {
-            if (_derivedTypes != null && _typeNames != null) return;
-
-            _derivedTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .Where(t => !t.IsAbstract && typeof(StateTransitionBase).IsAssignableFrom(t))
-                .ToList();
-
-            _typeNames = _derivedTypes.Select(t => t.Name).ToArray();
-        }
-
-        private static int GetTypeIndex(string fullTypeName)
-        {
-            if (string.IsNullOrEmpty(fullTypeName))
-                return -1;
-
-            string cleanName = fullTypeName.Split(',')[0]; // Strip assembly info
-            return _derivedTypes.FindIndex(t => t.FullName == cleanName);
+            float height = HEADER_HEIGHT + PADDING;
+            if (property.managedReferenceValue != null)
+                height += EditorGUI.GetPropertyHeight(property, true);
+            return height;
         }
     }
+
 }
 #endif

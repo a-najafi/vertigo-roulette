@@ -76,7 +76,7 @@ namespace BasicSM
                 DontDestroyOnLoad(gameObject);
             
             currentStateIndex = 0;
-            yield return States[currentStateIndex].State.OnEnter(this);
+            yield return TransitionState(-1,currentStateIndex);
 
             isInitialized = true;
 
@@ -143,18 +143,39 @@ namespace BasicSM
 
         public IEnumerator TransitionState(int fromStateIndex, int toStateIndex)
         {
-
             isInTransition = true;
-            IState from = States[fromStateIndex].State;
-            IState to = States[toStateIndex].State;
+            List<IStateTransition> transitions = null;
+            int transitionCount = 0;
+            if (fromStateIndex > 0)
+            {
+                IState from = States[fromStateIndex].State;
+                yield return from.OnExit(this);
+                
+                transitions = States[fromStateIndex].Transitions;
+                transitionCount = transitions.Count;
+                for (int i = 0; i < transitionCount; i++)
+                {
+                    yield return transitions[i].CleanUp();
+                }
+                
+            }
             
-            yield return from.OnExit(this);
+            IState to = States[toStateIndex].State;
             currentStateIndex = toStateIndex;
             yield return to.OnEnter(this);
+            
+            transitions = States[toStateIndex].Transitions;
+            transitionCount = transitions.Count;
+            for (int i = 0; i < transitionCount; i++)
+            {
+                yield return transitions[i].Initialize(this);
+            }
+            
+            
             isInTransition = false;
         }
         
-        public IEnumerator OnUpdate()
+        public virtual IEnumerator OnUpdate()
         {
             yield return States[currentStateIndex].State.OnUpdate(this);
             

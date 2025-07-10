@@ -7,12 +7,13 @@ namespace BasicSM
     [Serializable]
     public class StateConfigurationBase : IStateConfiguration
     {
-        [SerializeField] StateComponentBase _state;
-        [SerializeReference, SerializeField]private List<StateTransitionBase>  _serializedTransitions;
+        [SerializeField]private GameObject _stateGameObject; 
+        private StateComponentBase state;
+        [SerializeField, SerializeReference]private List<StateTransitionBase>  _serializedTransitions;
 
         private List<IStateTransition>  _transitions = null;
-        
-        public IState State => _state;
+
+        public IState State => state ??= _stateGameObject.GetComponent<StateComponentBase>();
         
         public List<IStateTransition> Transitions
         {

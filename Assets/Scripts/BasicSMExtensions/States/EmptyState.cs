@@ -1,19 +1,13 @@
 using System.Collections;
 using BasicSM;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 
-namespace Utility.BasicFSMExtensions
+namespace BasicSMExtensions.States
 {
-    public class LoadSceneState: StateComponentBase
+    public class EmptyState : StateComponentBase
     {
-        [SerializeField]private AssetReference sceneAsset;
-
         public override IEnumerator OnEnter(IStateMachine stateMachine)
         {
-            var loadSceneAssetAsync = sceneAsset.LoadSceneAsync(LoadSceneMode.Single,true);
-            yield return loadSceneAssetAsync;
+            yield return null;
         }
 
         public override IEnumerator OnExit(IStateMachine stateMachine)
@@ -27,6 +21,11 @@ namespace Utility.BasicFSMExtensions
         }
 
         public override IEnumerator OnFixedUpdate(IStateMachine stateMachine)
+        {
+            yield return null;
+        }
+
+        public override IEnumerator OnCleanUp(IStateMachine stateMachine)
         {
             yield return null;
         }

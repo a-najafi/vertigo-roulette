@@ -25,6 +25,14 @@ MonoBehaviour:
     m_Address: SomeItemTesting
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: c7e10b19c4c27994ead8b7eef7a6b574
+    m_Address: PlayerInevntory
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6d458926d3301964686b7a4090f33070
+    m_Address: RouletteMiniGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
   m_SchemaSet:
