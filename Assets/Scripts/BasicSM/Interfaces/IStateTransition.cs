@@ -5,6 +5,11 @@ namespace BasicSM
 {
     public interface IStateTransition
     {
+        
+        IEnumerator Initialize(IStateMachine stateMachine);
+        
+        IEnumerator CleanUp();
+        
         bool ShouldTransition(IStateMachine stateMachine);
         
         IState TargetState { get; }
