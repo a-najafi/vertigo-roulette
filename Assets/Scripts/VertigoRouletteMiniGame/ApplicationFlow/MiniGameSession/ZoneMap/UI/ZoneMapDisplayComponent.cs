@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
+using Utility.Couroutine;
 using Utility.UI;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 {
-    public class RouletteZoneMapDisplayComponent : MonoBehaviour
+    public class ZoneMapDisplayComponent : MonoBehaviour
     {
         [SerializeField]private Canvas _canvas;
         [SerializeField]private int _numberOfZonesToDisplay = 5;
@@ -17,7 +18,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 
 
 
-        List<RouletteZoneUIElement> zoneDisplays = new List<RouletteZoneUIElement>();
+        Dictionary<int,ZoneDisplayComponent> zoneDisplays = new Dictionary<int,ZoneDisplayComponent>();
         List<GameObject > zoneDisplaysInPool = new List<GameObject>();
 
         private List<Vector3> zoneDisplayPositions = null;
@@ -56,34 +57,37 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 
         public IEnumerator Cleanup()
         {
-            
+            yield return null;
         }
 
         public IEnumerator InitializeZones(List<ZoneInstance> zones)
         {
-            
             currentActiveZoneIndex = 0;
 
+            //group of zone instances we want to display
             int leftMostZoneDisplayIndex = Mathf.Max(0, currentActiveZoneIndex - ((_numberOfZonesToDisplay / 2) + 1));
             int rightMostZoneDisplayIndex = Mathf.Min(zones.Count -1,currentActiveZoneIndex + ((_numberOfZonesToDisplay / 2) + 1) );
+
+            List<IEnumerator> initZoneDisplayRoutines = new List<IEnumerator>();
+            
+           // yield return WaitForAll()
             
             for (int i = leftMostZoneDisplayIndex; i < rightMostZoneDisplayIndex; i++)
             {
                 int zoneDisplayIndex = ConvertZoneIndexToZonesToDisplayIndex(i);
-                
                 GameObject zoneDisplayGameObject = Instantiate(_zoneDisplayPrefab, _zoneDisplayParent);
-                RouletteZoneUIElement zoneDisplay = zoneDisplayGameObject.GetComponent<RouletteZoneUIElement>();
-               // zoneDisplay.Initialize()
-
+                ZoneDisplayComponent zoneDisplay = zoneDisplayGameObject.GetComponent<ZoneDisplayComponent>();
                 
-                
+                //instead of yield return zoneDisplay.Initialize(zones[i],zoneDisplayIndex);
+                initZoneDisplayRoutines.Add(zoneDisplay.Initialize(zones[i],zoneDisplayIndex));
+                zoneDisplays.Add(zoneDisplayIndex,zoneDisplay);
             }
-            
+            yield return this.WaitForAll(initZoneDisplayRoutines);
         }
 
-        private RouletteZoneUIElement CreateZoneDisplay(ZoneInstance zone)
+        private ZoneDisplayComponent CreateZoneDisplay(ZoneInstance zone)
         {
-            
+            return null;
         }
 
         protected void SpawnZoneUIElementAtZoneIndex(int zoneIndex)
@@ -93,7 +97,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 
         public IEnumerator UpdateActiveZone(int activeZoneIndex, List<ZoneInstance> zones)
         {
-            
+            /*
             if (currentActiveZoneIndex != activeZoneIndex)
             {
                 if (zoneDisplayPrefab == null)
@@ -104,7 +108,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
                 }    
             }
             
-            
+            */
             
             
             yield return null;

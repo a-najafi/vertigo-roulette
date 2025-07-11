@@ -15,9 +15,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
     public class ZoneInstance
     {
         private int zoneIndex;
-        private RouletteConfigurationBase _rouletteConfigurationBase;
-        private EZoneType zoneType;
-        
-        
+        private ZoneConfiguration zoneConfiguration;
+        private EZoneState zoneState;
     }
 }
