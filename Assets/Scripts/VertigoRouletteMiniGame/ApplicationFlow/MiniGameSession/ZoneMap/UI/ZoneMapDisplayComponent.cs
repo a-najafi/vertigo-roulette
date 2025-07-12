@@ -21,7 +21,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
         Dictionary<int,ZoneDisplayComponent> zoneDisplays = new Dictionary<int,ZoneDisplayComponent>();
         List<GameObject > zoneDisplaysInPool = new List<GameObject>();
 
-        private List<Vector3> zoneDisplayPositions = null;
+        private List<Vector2> zoneDisplayPositions = null;
         private float zoneDisplaySpacing = -1;
         
         private int CurrentActiveZoneToDisplayIndex
@@ -47,13 +47,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
                 return currentActiveZoneToDisplayIndex - (zoneIndex - currentActiveZoneIndex);
         }
 
-        public void Initialize()
-        {
-            float canvasWidth = _canvas.pixelRect.width;
-            (zoneDisplayPositions,zoneDisplaySpacing)=CanvasPointDivider.GetUIHorizontalPoints(_canvas.GetComponent<RectTransform>(), _numberOfZonesToDisplay,true);
-            
-            
-        }
+
 
         public IEnumerator Cleanup()
         {
@@ -62,6 +56,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 
         public IEnumerator InitializeZones(List<ZoneInstance> zones)
         {
+            CanvasPointDivider.DivideHorizontally(_canvas.GetComponent<RectTransform>(), _numberOfZonesToDisplay,out zoneDisplayPositions,out zoneDisplaySpacing,true);
+
+
             currentActiveZoneIndex = 0;
 
             //group of zone instances we want to display
@@ -76,10 +73,15 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
             {
                 int zoneDisplayIndex = ConvertZoneIndexToZonesToDisplayIndex(i);
                 GameObject zoneDisplayGameObject = Instantiate(_zoneDisplayPrefab, _zoneDisplayParent);
+                RectTransform zoneDisplayRectTransform = zoneDisplayGameObject.GetComponent<RectTransform>();
+                
+                zoneDisplayRectTransform.anchoredPosition = zoneDisplayPositions[zoneDisplayIndex];
+                
                 ZoneDisplayComponent zoneDisplay = zoneDisplayGameObject.GetComponent<ZoneDisplayComponent>();
                 
                 //instead of yield return zoneDisplay.Initialize(zones[i],zoneDisplayIndex);
                 initZoneDisplayRoutines.Add(zoneDisplay.Initialize(zones[i],zoneDisplayIndex));
+                
                 zoneDisplays.Add(zoneDisplayIndex,zoneDisplay);
             }
             yield return this.WaitForAll(initZoneDisplayRoutines);

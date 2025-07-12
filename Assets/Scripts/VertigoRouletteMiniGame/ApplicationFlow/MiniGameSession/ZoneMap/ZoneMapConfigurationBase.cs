@@ -10,9 +10,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
     {
         
         public virtual void ProvideZoneConfiguration(int currentProgression, int maxProgression,
-            ref List<ZoneConfiguration> zoneConfigurations)
+            out List<ZoneConfiguration> zoneConfigurations)
         {
-            
+            throw new System.NotImplementedException();
         }
 
     }

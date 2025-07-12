@@ -4,17 +4,19 @@ using VertigoRouletteMiniGame.ApplicationFlow.RouletteZoneMap;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
 {
+    [CreateAssetMenu(fileName = "ZoneMapConfigurationFixed", menuName = "MiniGame/ZoneMapConfigurationFixed")]
     public class ZoneMapConfigurationFixed : ZoneMapConfigurationBase
     {
         [SerializeField] private bool _loop = true;
         [SerializeField]private List<ZoneConfiguration> _zoneConfigurations;
         
         public override void ProvideZoneConfiguration(int currentProgression, int maxProgression,
-            ref List<ZoneConfiguration> zoneConfigurations)
+            out List<ZoneConfiguration> zoneConfigurations)
         {
-            if (currentProgression > maxProgression)
-                throw new System.Exception("Provided progression is out of range.");
             
+            if (maxProgression > 0 && currentProgression > maxProgression)
+                throw new System.Exception("Provided progression is out of range.");
+            zoneConfigurations = new List<ZoneConfiguration>();
             if (_loop)
             {
                 int loopedCount = _zoneConfigurations.Count;
@@ -27,7 +29,11 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
             }
             else if(currentProgression < _zoneConfigurations.Count)
             {
-                maxProgression = Mathf.Min(maxProgression, _zoneConfigurations.Count);
+                if (maxProgression > 0)
+                    maxProgression = Mathf.Min(maxProgression, _zoneConfigurations.Count);
+                else
+                    maxProgression = _zoneConfigurations.Count;
+                
                 for (int i = currentProgression; i < maxProgression; i++)
                 {
                     zoneConfigurations.Add(_zoneConfigurations[i]);

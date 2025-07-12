@@ -2,39 +2,43 @@ namespace Utility.UI
 {
     using System.Collections.Generic;
     using UnityEngine;
-
     public static class CanvasPointDivider
     {
-        public static (List<Vector3> points, float spacing) GetUIHorizontalPoints(RectTransform canvasRect, int count, bool includeOutside = false)
+        /// <summary>
+        /// Divides the width of a RectTransform into equal horizontal points.
+        /// </summary>
+        /// <param name="canvasRect">RectTransform to divide</param>
+        /// <param name="pointCount">Must be odd for a center point</param>
+        /// <param name="points">Output list of anchored positions (centered)</param>
+        /// <param name="spacing">Output spacing between each point</param>
+        /// <param name="includeOutsidePoints">If true, adds one point before and after the main range</param>
+        public static void DivideHorizontally(
+            RectTransform canvasRect,
+            int pointCount,
+            out List<Vector2> points,
+            out float spacing,
+            bool includeOutsidePoints = false)
         {
-            if (count % 2 == 0 || count < 1)
-                throw new System.ArgumentException("Count must be an odd number greater than 0.");
+            points = new List<Vector2>();
 
             float width = canvasRect.rect.width;
-            float spacing = width / (count - 1);
-            float startX = -width / 2f;
 
-            List<Vector3> positions = new List<Vector3>();
-            for (int i = 0; i < (count); i++)
+            if (pointCount % 2 == 0)
             {
-                float x = startX + i * spacing;
-                positions.Add(new Vector3(x, 0f, 0f));
+                Debug.LogWarning("CanvasPointDivider: pointCount should be odd for a center point.");
+                pointCount += 1;
             }
 
-            if (includeOutside)
+            spacing = width / (pointCount - 1);
+
+            int start = includeOutsidePoints ? -1 : 0;
+            int end = includeOutsidePoints ? pointCount + 1 : pointCount;
+
+            for (int i = start; i < end; i++)
             {
-                Vector3 leftOutside = new Vector3(startX - spacing, 0f, 0f);
-                
-                positions.Insert(0,leftOutside);
-                
-                Vector3 rightOutside = new Vector3(startX + count * spacing, 0f, 0f);
-                
-                positions.Add(rightOutside);
-                    
+                float x = (i - (pointCount - 1) / 2f) * spacing;
+                points.Add(new Vector2(x, 0));
             }
-            
-            return (positions, spacing);
         }
     }
-
 }

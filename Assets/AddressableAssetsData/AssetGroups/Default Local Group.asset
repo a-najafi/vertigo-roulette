@@ -17,20 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: e83b71608781381418efd890af98ee0d
   m_SerializeEntries:
-  - m_GUID: 5891c68ec5b5cd84e9bf90df4e6e329e
-    m_Address: SomeTEstyyyyy
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 8a83da22173ee3741a881a073aaa38c9
-    m_Address: SomeItemTesting
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: c7e10b19c4c27994ead8b7eef7a6b574
     m_Address: PlayerInevntory
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 6d458926d3301964686b7a4090f33070
-    m_Address: RouletteMiniGame
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

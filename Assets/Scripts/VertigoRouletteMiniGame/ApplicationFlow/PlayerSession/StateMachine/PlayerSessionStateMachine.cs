@@ -18,11 +18,5 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine
         }
 
 #endif
-        
-        
-        public override IEnumerator Initialize(IStateMachine stateMachine)
-        {
-            return base.Initialize(stateMachine);
-        }
     }
 }

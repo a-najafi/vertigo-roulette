@@ -4,7 +4,7 @@ using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.Re
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession
 {
-    [CreateAssetMenu(fileName = "New Roulette Configuration", menuName = "MiniGameSession/Roulette Configuration")]
+    [CreateAssetMenu(fileName = "RouletteConfigurationFixed", menuName = "MiniGame/RouletteConfigurationFixed")]
     public class RouletteConfigurationFixed : RouletteConfigurationBase
     {
         [SerializeField]private List<RouletteRewardConfiguration> _rouletteRewardConfigurations = new List<RouletteRewardConfiguration>(); 

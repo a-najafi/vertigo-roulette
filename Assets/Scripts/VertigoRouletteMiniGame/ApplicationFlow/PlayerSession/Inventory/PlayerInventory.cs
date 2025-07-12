@@ -70,7 +70,14 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
             if (playerInventoryItem == null || playerInventoryItem.Count < amount)
                 return false;
             playerInventoryItem.Count -= amount;
+            if (playerInventoryItem.Count <= 0)
+                playerInventoryItems.Remove(playerInventoryItem);
             return true;
+        }
+
+        public void ClearInventory()
+        {
+            playerInventoryItems.Clear();
         }
         
         
