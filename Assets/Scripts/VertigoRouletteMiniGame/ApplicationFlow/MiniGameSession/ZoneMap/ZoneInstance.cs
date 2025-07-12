@@ -7,7 +7,6 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
     public enum EZoneState
     {
         None,
-        Active,
         Win,
         Lose
     }

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: sa_RouletteIcons
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 09f67a00b77259442a9e9327bc284379, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0c3f07e0917f0fa49aed67bbde2a1ba7, type: 3}
+  - {fileID: 21300000, guid: 64c897f2409eca044af74a819c5be582, type: 3}
+  - {fileID: 21300000, guid: 9d0562a9e73d7e349a1d43c7b780f611, type: 3}
+  - {fileID: 21300000, guid: 659078cb9c311ef449add127452a7ec5, type: 3}
+  - {fileID: 21300000, guid: 6494027cc1055d24d8628dc27de4f9f6, type: 3}
+  - {fileID: 21300000, guid: fa619edd0266dac42bdb1862055223cd, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ui_spin_bronze_indicator
+  - ui_spin_silver_indicator
+  - ui_spin_bronze_base
+  - ui_spin_silver_base
+  - ui_spin_golden_base
+  - ui_spin_golden_indicator
+  m_RenderDataMap: {}
+  m_Tag: sa_RouletteIcons
+  m_IsVariant: 0

@@ -17,5 +17,14 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSessio
         private ERouletteState state;
         private RouletteRewardConfiguration resultRewardConfiguration;
         
+        public RouletteConfigurationBase Configuration => configuration;
+
+        public List<RouletteRewardConfiguration> RewardConfigurations => rewardConfigurations;
+
+        public ERouletteState State => state;
+
+        public RouletteRewardConfiguration ResultRewardConfiguration => resultRewardConfiguration;
+
+        
     }
 }

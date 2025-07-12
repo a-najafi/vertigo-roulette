@@ -20,6 +20,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
         [SerializeField]private TextMeshProUGUI _zoneIndexText;
         
         
+        
 
         public virtual IEnumerator Initialize(ZoneInstance zoneInstance, int zoneDisplayIndex)
         {
@@ -30,7 +31,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 
             switch (zoneInstance.ZoneState)
             {
-                case EZoneState.Active:
+                case EZoneState.None:
                     spriteRef = zoneInstance.ZoneConfiguration.ZoneSpriteActive;
                     break;
                 case EZoneState.Win:
@@ -41,10 +42,13 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
                     break;
             }
 
-            yield return AddressableAssetManager.LoadAsset<Sprite>(spriteRef, (sprite =>
-            {
-                _zoneImage.sprite = sprite;
-            }));
+            yield return AddressableAssetManager.LoadAsset<Sprite>(spriteRef,
+                sprite =>
+                {
+                    _zoneImage.sprite = sprite;
+                });
+
+         
 
             
             _zoneIndexText.text = zoneInstance.ZoneIndex.ToString();

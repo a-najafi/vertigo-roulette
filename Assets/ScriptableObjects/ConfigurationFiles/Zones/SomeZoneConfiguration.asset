@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b97c3d351c458496dbe204fdc53145, type: 3}
   m_Name: SomeZoneConfiguration
   m_EditorClassIdentifier: 
+  _rouletteSprite:
+    m_AssetGUID: 1c3ffd0f96cf343489f0244c25272942
+    m_SubObjectName: ui_spin_bronze_base
+    m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    m_EditorAssetChanged: 0
+  _roulettePinSprite:
+    m_AssetGUID: 1c3ffd0f96cf343489f0244c25272942
+    m_SubObjectName: ui_spin_bronze_indicator
+    m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    m_EditorAssetChanged: 0
   _zoneSpriteComing:
     m_AssetGUID: 195b1a65b01bc6040b6031a0317dd717
     m_SubObjectName: ui_card_panel_zone_coming

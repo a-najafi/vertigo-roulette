@@ -55,16 +55,19 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
 
         public bool TryMakeNextZoneActive()
         {
-            return TrySetActiveZoneIndex(activeZoneIndex + 1);
-        }
-
-        protected bool TrySetActiveZoneIndex(int newActiveZoneIndex)
-        {
+            int newActiveZoneIndex = activeZoneIndex + 1;
+            
             if (newActiveZoneIndex < 0 || newActiveZoneIndex >= zoneInstances.Count)
                 return false;
+            
+            if (zoneInstances[activeZoneIndex].ZoneState != EZoneState.Win)
+                return false;
+            
             activeZoneIndex = newActiveZoneIndex;
             return true;
         }
+
+        
 
         public ZoneInstance GetActiveZoneInstance()
         {
