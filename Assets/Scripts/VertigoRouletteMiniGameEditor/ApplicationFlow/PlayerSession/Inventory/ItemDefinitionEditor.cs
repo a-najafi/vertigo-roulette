@@ -38,7 +38,7 @@ namespace VertigoRouletteMiniGameEditor
                 var settings = AddressableAssetSettingsDefaultObject.Settings;
                 var entry = settings.FindAssetEntry(guid);
                 if(entry != null)
-                    itemDefinition.UpdateUniqueId(entry.address);
+                    itemDefinition.UpdateUniqueId(entry.guid);
                 else
                 {
                     itemDefinition.UpdateUniqueId("ItemDefinition must be set to addressable");

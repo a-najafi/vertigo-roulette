@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: MiniGame
+  m_EditorClassIdentifier: 
+  m_GroupName: MiniGame
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 85f072535d90f244fb31545558e06a48
+  m_SerializeEntries:
+  - m_GUID: 6d458926d3301964686b7a4090f33070
+    m_Address: RouletteMiniGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e0deec10180089542ad295f189834d75, type: 2}
+    - {fileID: 11400000, guid: 423c623287c7e244897ef241a09ea035, type: 2}

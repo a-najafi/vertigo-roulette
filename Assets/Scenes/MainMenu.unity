@@ -226,7 +226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89a618d005b5e37479a28c2faf3eda7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e2b332128bd7704aa7919a7d4ab95e4, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -534,7 +534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89a618d005b5e37479a28c2faf3eda7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e2b332128bd7704aa7919a7d4ab95e4, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -840,7 +840,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89a618d005b5e37479a28c2faf3eda7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e2b332128bd7704aa7919a7d4ab95e4, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1437,7 +1437,7 @@ MonoBehaviour:
     _serializedTransitions: []
   - _stateGameObject: {fileID: 2126174983}
     _serializedTransitions: []
-  - _stateGameObject: {fileID: 0}
+  - _stateGameObject: {fileID: 917555056}
     _serializedTransitions: []
   currentStateIndex: 0
   references:
@@ -1447,17 +1447,17 @@ MonoBehaviour:
       type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
       data:
         targetStateGameObject: {fileID: 1500827142}
-        _button: {fileID: 0}
+        _button: {fileID: 182949220}
     - rid: 1629599610321240064
       type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
       data:
         targetStateGameObject: {fileID: 730217544}
-        _button: {fileID: 0}
+        _button: {fileID: 917555058}
     - rid: 1629599610321240065
       type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
       data:
-        targetStateGameObject: {fileID: 0}
-        _button: {fileID: 0}
+        targetStateGameObject: {fileID: 2126174983}
+        _button: {fileID: 348865105}
 --- !u!1 &2076378511
 GameObject:
   m_ObjectHideFlags: 0

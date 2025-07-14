@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using BasicSM;
+using BasicSMExtensions.States;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine.States
 {
-    public class PlayerSessionStateBase : StateComponentBase
+    public class PlayerSessionStateBase : EmptyState
     {
         protected PlayerSessionComponent playerSessionComponent;
         public override IEnumerator OnEnter(IStateMachine stateMachine)

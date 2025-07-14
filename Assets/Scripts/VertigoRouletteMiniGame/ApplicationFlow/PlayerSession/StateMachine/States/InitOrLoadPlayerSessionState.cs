@@ -73,7 +73,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine.Sta
             int startingInventoryCount = playerSessionStartingConfig.PlayerInventoryItemDesigns.Count;
             for (int i = 0; i < startingInventoryCount; i++)
             {
-                playerSession.Inventory.IncreaseCount(playerSessionStartingConfig.PlayerInventoryItemDesigns[i].ItemDefinitionAssetReference.RuntimeKey.ToString(),playerSessionStartingConfig.PlayerInventoryItemDesigns[i].Count);
+                playerSession.Inventory.IncreaseCount(playerSessionStartingConfig.PlayerInventoryItemDesigns[i].ItemDefinitionAssetReference.AssetGUID,playerSessionStartingConfig.PlayerInventoryItemDesigns[i].Count);
             }
 
             yield return SavePlayerSession(playerSession);
