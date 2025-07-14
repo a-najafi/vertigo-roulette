@@ -63,8 +63,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 
         public virtual IEnumerator InitializeRoulette()
         {
-            _rouletteDisplay.gameObject.SetActive(true);
+            
             yield return _rouletteDisplay.Initialize(zoneInstance);
+            _rouletteDisplay.gameObject.SetActive(true);
             
         }
 

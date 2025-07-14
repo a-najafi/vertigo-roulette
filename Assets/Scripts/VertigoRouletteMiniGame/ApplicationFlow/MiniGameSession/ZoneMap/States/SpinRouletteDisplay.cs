@@ -13,8 +13,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.States
         {
             yield return base.OnEnter(stateMachine);
             ZoneDisplayComponent activeZoneDisplayComponent = _zoneMapDisplayComponent.GetActiveZoneDisplay();
+            Debug.Log("SpinRouletteDisplay entered " + activeZoneDisplayComponent.ZoneInstance.RouletteInstance.ResultIndex);
             yield return activeZoneDisplayComponent
-                .SpinRoulette(miniGameSessionComponent.GetActiveZoneInstance().RouletteInstance.ResultIndex);
+                .SpinRoulette(activeZoneDisplayComponent.ZoneInstance.RouletteInstance.ResultIndex);
 
             yield return activeZoneDisplayComponent.DisplayFinalReward();
         }
