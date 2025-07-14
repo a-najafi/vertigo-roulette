@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MiniGameConfiguration
   m_EditorClassIdentifier: 
   _zoneMapConfigurationAssetReference:
-    m_AssetGUID: e7327ffb25e580c458f32a1cb08a524f
+    m_AssetGUID: eeb72273bd2609745a46ce06dc37ae9b
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

@@ -12,8 +12,8 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
 
         private int activeZoneIndex = 0;
         private int maxProgression = -1;
-        
-        public List<ZoneInstance> ZoneInstances => zoneInstances;
+
+        public int MaxProgression => maxProgression;
 
         public int ActiveZoneIndex => activeZoneIndex;
 
@@ -21,32 +21,10 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
         {
             this.zoneMapConfiguration = zoneMapConfiguration;
             this.maxProgression = maxProgression;
-            ResolveZoneInstances();
         }
 
-        protected bool ResolveZoneInstances(int includeFutureZoneNum = 0)
-        {
-            
-            if (maxProgression > 0 && activeZoneIndex >= maxProgression)
-                return false;
-            
-            if (activeZoneIndex + includeFutureZoneNum >= zoneInstances.Count)
-            {
-                zoneMapConfiguration.ProvideZoneConfiguration(activeZoneIndex,maxProgression,out List<ZoneConfiguration> zoneConfigurations);
-
-                if (zoneConfigurations.Count == 0)
-                    return false;
-                
-                for (int i = 0; i < zoneConfigurations.Count; i++)
-                {
-                    ZoneInstance zoneInstance = new ZoneInstance(activeZoneIndex + i, zoneConfigurations[i]);
-                    zoneInstances.Add(zoneInstance);
-                }
-            }
-
-            return true;
-        }
-
+ 
+        
         public ZoneMapInstance(List<ZoneInstance> zoneInstances)
         {
             this.zoneInstances = zoneInstances;
@@ -55,14 +33,18 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
 
         public bool TryMakeNextZoneActive()
         {
-            int newActiveZoneIndex = activeZoneIndex + 1;
             
-            if (newActiveZoneIndex < 0 || newActiveZoneIndex >= zoneInstances.Count)
-                return false;
             
             if (zoneInstances[activeZoneIndex].ZoneState != EZoneState.Win)
                 return false;
             
+            int newActiveZoneIndex = activeZoneIndex + 1;
+            
+            
+            if (newActiveZoneIndex >= zoneInstances.Count)
+            {
+                ZoneInstance zoneInstance = GetZoneInstance(newActiveZoneIndex);
+            }
             activeZoneIndex = newActiveZoneIndex;
             return true;
         }
@@ -71,17 +53,27 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
 
         public ZoneInstance GetActiveZoneInstance()
         {
-            return zoneInstances[activeZoneIndex];
+            return GetZoneInstance(activeZoneIndex);
         }
 
         public ZoneInstance GetZoneInstance(int zoneIndex)
         {
-            if (zoneIndex >= zoneInstances.Count)
+            if(maxProgression > 0 && zoneIndex > maxProgression)
+                return null;
+            
+            if(zoneIndex >= zoneInstances.Count)
             {
-                ResolveZoneInstances(zoneIndex - activeZoneIndex);
+                zoneMapConfiguration.GetZoneConfigurations( zoneIndex ,zoneIndex - zoneInstances.Count + 1,out List<ZoneConfiguration> zoneConfigurations);
+                for (int i = 0; i < zoneConfigurations.Count; i++)
+                {
+                    ZoneInstance zoneInstance = new ZoneInstance(zoneInstances.Count + i, zoneConfigurations[i]);
+                    zoneInstances.Add(zoneInstance);
+                }
             }
             return zoneInstances[zoneIndex];
         }
+        
+        
         
 
 

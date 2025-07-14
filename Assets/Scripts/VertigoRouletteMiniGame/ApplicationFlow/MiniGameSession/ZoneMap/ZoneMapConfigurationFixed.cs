@@ -10,31 +10,24 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
         [SerializeField] private bool _loop = true;
         [SerializeField]private List<ZoneConfiguration> _zoneConfigurations;
         
-        public override void ProvideZoneConfiguration(int currentProgression, int maxProgression,
+        
+        public override void GetZoneConfigurations(int index, int count,
             out List<ZoneConfiguration> zoneConfigurations)
         {
-            
-            if (maxProgression > 0 && currentProgression > maxProgression)
-                throw new System.Exception("Provided progression is out of range.");
             zoneConfigurations = new List<ZoneConfiguration>();
             if (_loop)
             {
                 int loopedCount = _zoneConfigurations.Count;
-                int nonLoopIndex = currentProgression % _zoneConfigurations.Count;
-
-                for (int i = nonLoopIndex; i < loopedCount; i++)
+                for (int i = index; i < index + count; i++)
                 {
-                    zoneConfigurations.Add(_zoneConfigurations[i]);
+                    int nonLoopIndex = i % _zoneConfigurations.Count;
+                    zoneConfigurations.Add(_zoneConfigurations[nonLoopIndex]);
                 }
             }
-            else if(currentProgression < _zoneConfigurations.Count)
+            else if(index < _zoneConfigurations.Count)
             {
-                if (maxProgression > 0)
-                    maxProgression = Mathf.Min(maxProgression, _zoneConfigurations.Count);
-                else
-                    maxProgression = _zoneConfigurations.Count;
-                
-                for (int i = currentProgression; i < maxProgression; i++)
+                count = Mathf.Min(index + count, _zoneConfigurations.Count);
+                for (int i = index; i < index + count; i++)
                 {
                     zoneConfigurations.Add(_zoneConfigurations[i]);
                 }
@@ -42,5 +35,22 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
             else
                 throw new System.Exception("Provided progression is out of range of this zone map. ");
         }
+
+        public override ZoneConfiguration GetZoneConfiguration(int index)
+        {
+            if (_loop)
+            {
+                int nonLoopIndex = index % _zoneConfigurations.Count;
+                return _zoneConfigurations[nonLoopIndex];
+            }
+            else if(index < _zoneConfigurations.Count)
+            {
+                return _zoneConfigurations[index];
+            }
+            else
+                throw new System.Exception("Provided progression is out of range of this zone map. ");
+        }
+
+        
     }
 }

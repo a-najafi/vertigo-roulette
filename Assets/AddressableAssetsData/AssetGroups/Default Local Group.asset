@@ -21,6 +21,14 @@ MonoBehaviour:
     m_Address: PlayerInevntory
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: efcd67a45831459409e7596c6fd83548
+    m_Address: SomeItem2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 43b39d5eeb99a954d9ba8d630c4f40a3
+    m_Address: SomeRouletteConfigurationFixedIncludesNoBomb
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1acea7fbc21bc9f489f96c2bc9b2ea53, type: 2}
   m_SchemaSet:

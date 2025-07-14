@@ -7,24 +7,30 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utility.Addressable;
+using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.UI;
+using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 {
     public class ZoneDisplayComponent : MonoBehaviour
     {
         
-        private int zoneDisplayIndex;
         private ZoneInstance zoneInstance;
-        
-        [SerializeField]private Image _zoneImage;
-        [SerializeField]private TextMeshProUGUI _zoneIndexText;
-        
-        
+
         
 
-        public virtual IEnumerator Initialize(ZoneInstance zoneInstance, int zoneDisplayIndex)
+        [SerializeField]private Image _zoneImage;
+        [SerializeField]private TextMeshProUGUI _zoneIndexText;
+        [SerializeField]private RouletteDisplay _rouletteDisplay;
+        
+        [SerializeField]private GameObject _zoneRewardDisplay;
+        
+        public ZoneInstance ZoneInstance => zoneInstance;
+        public virtual IEnumerator Initialize(ZoneInstance zoneInstance)
         {
-            this.zoneDisplayIndex = zoneDisplayIndex;
+            _zoneRewardDisplay.SetActive(false);
+            _rouletteDisplay.gameObject.SetActive(false);
+            
             this.zoneInstance = zoneInstance;
 
             AssetReferenceAtlasedSprite spriteRef = zoneInstance.ZoneConfiguration.ZoneSpriteActive;
@@ -53,6 +59,43 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
             
             _zoneIndexText.text = zoneInstance.ZoneIndex.ToString();
             yield return null;
+        }
+
+        public virtual IEnumerator InitializeRoulette()
+        {
+            _rouletteDisplay.gameObject.SetActive(true);
+            yield return _rouletteDisplay.Initialize(zoneInstance);
+            
+        }
+
+        public IEnumerator SpinRoulette(int outComeIndex)
+        {
+            yield return _rouletteDisplay.Spin(outComeIndex);
+        }
+
+        public IEnumerator DisplayFinalReward()
+        {
+            _rouletteDisplay.gameObject.SetActive(false);
+            _zoneRewardDisplay.SetActive(true);
+            if(zoneInstance == null)
+                throw new NullReferenceException("No Zone instance assigned");
+            if(zoneInstance.RouletteInstance == null)
+                throw new NullReferenceException("No Roulette instance assigned");
+            if(zoneInstance.RouletteInstance.ResultRewardConfiguration == null)
+                throw new NullReferenceException("No Result Reward configuration assigned");
+            if(zoneInstance.RouletteInstance.ResultRewardConfiguration.ItemDefinition  == null)
+                throw new NullReferenceException("No Item Reward configuration assigned");
+            
+            
+            yield return AddressableAssetManager.LoadAsset<ItemDefinition>(
+                zoneInstance.RouletteInstance.ResultRewardConfiguration.ItemDefinition,
+                definition =>
+                {
+                    RewardDisplay _zoneRewardDisplayComponent =
+                        _zoneRewardDisplay.GetComponentInChildren<RewardDisplay>();
+                    if(_zoneRewardDisplayComponent != null)
+                        StartCoroutine(_zoneRewardDisplayComponent.Initialize(definition,zoneInstance.RouletteInstance.ResultRewardConfiguration.Amount));
+                });
         }
     }
 }

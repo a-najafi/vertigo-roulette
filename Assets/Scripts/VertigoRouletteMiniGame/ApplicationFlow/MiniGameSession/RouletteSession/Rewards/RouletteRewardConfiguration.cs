@@ -16,7 +16,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSessio
         
         public float ProbabilityModifier => _probabilityModifier;
         public int Amount => _amount;
-        public AssetReference ItemDefinition => _itemDefinition;
         public bool IsBomb => _isBomb;
+        public AssetReference ItemDefinition => _itemDefinition;
     }
 }

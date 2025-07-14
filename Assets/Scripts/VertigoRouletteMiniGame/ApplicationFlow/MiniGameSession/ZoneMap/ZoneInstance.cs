@@ -1,4 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Utility.Addressable;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession;
+using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.Rewards;
 using VertigoRouletteMiniGame.ApplicationFlow.RouletteZoneMap;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
@@ -33,5 +38,28 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
             this.zoneConfiguration = zoneConfiguration;
             this.zoneState = EZoneState.None;
         }
+
+        public IEnumerator SpinRouletteZone()
+        {
+            if(rouletteInstance == null)
+                yield return InitializeRouletteInstance();
+            
+            rouletteInstance.SpinRoulette();
+            if (rouletteInstance.ResultRewardConfiguration.IsBomb)
+                zoneState = EZoneState.Lose;
+            else
+                zoneState = EZoneState.Win;
+        }
+
+        public IEnumerator InitializeRouletteInstance()
+        {
+            yield return AddressableAssetManager.LoadAsset<RouletteConfigurationBase>(zoneConfiguration.RouletteConfigAsset,
+                rouletteConfig =>
+                {
+                    rouletteInstance = new RouletteInstance(rouletteConfig);
+                });
+        }
+        
+      
     }
 }

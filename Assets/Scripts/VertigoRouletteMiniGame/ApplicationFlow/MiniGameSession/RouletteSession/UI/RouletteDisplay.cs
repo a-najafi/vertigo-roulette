@@ -1,10 +1,17 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utility.Addressable;
+using Utility.Couroutine;
 using Utility.UI;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.Rewards;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap;
+using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.UI
 {
@@ -15,24 +22,76 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSessio
         [SerializeField]private RadialLayout _rewardRadialLayout;
         
         [SerializeField] private GameObject _rewardDisplayPrefab;
-        
+        [SerializeField] private int _initialSpins = 5;
+        [SerializeField] private float _spinDuration = 4;
+        [SerializeField] private  Ease _spinEase = Ease.OutQuart;
         
 
         public IEnumerator Initialize(ZoneInstance zoneInstance)
         {
+            
             yield return AddressableAssetManager.LoadAsset<Sprite>(zoneInstance.ZoneConfiguration.RouletteSprite,
-                sprite =>
-                {
-                    _rouletteImage.sprite = sprite;
-                });
+                 sprite =>
+                 {
+                     _rouletteImage.sprite = null;
+                     _rouletteImage.sprite = sprite;
+                 });
             
             
             yield return AddressableAssetManager.LoadAsset<Sprite>(zoneInstance.ZoneConfiguration.RoulettePinSprite,
-                sprite =>
+                pinSprite =>
                 {
-                    _roulettePinImage.sprite = sprite;
+                    _roulettePinImage.sprite = null;
+                    _roulettePinImage.sprite = pinSprite;
+                });
+
+            if (zoneInstance.RouletteInstance != null)
+            {
+                _rewardRadialLayout.enabled = false;
+                List<IEnumerator> addRewardDisplayRoutines = new List<IEnumerator>();
+                for (int i = 0; i < zoneInstance.RouletteInstance.RewardConfigurations.Count; i++)
+                {
+                    addRewardDisplayRoutines.Add(AddRewardDisplay(zoneInstance.RouletteInstance.RewardConfigurations[i]));
+                }
+
+                yield return this.WaitForAll(addRewardDisplayRoutines);
+                _rewardRadialLayout.enabled = true;
+            }
+            
+        }
+
+        protected IEnumerator AddRewardDisplay(RouletteRewardConfiguration rouletteRewardConfiguration)
+        {
+            //Action<ItemDefinition> onItemDefinitionLoaded = 
+            return AddressableAssetManager.LoadAsset<ItemDefinition>(rouletteRewardConfiguration.ItemDefinition,
+                definition =>
+                {
+                    GameObject gameObject = Instantiate(_rewardDisplayPrefab, _rewardRadialLayout.transform, false);
+                    RewardDisplay rewardDisplay = gameObject.GetComponent<RewardDisplay>();
+                    StartCoroutine(rewardDisplay.Initialize(definition, rouletteRewardConfiguration.Amount));
                 });
         }
+
+        
+        
+        /// <summary>
+        /// Spins and lands the target index at 12 o'clock (top).
+        /// </summary>
+        public IEnumerator Spin(int finalOutcomeIndex)
+        {
+            
+            float anglePerSlot = 360f / _rewardRadialLayout.slotCount;
+            float targetAngle = finalOutcomeIndex * anglePerSlot;
+            float totalRotation = (_initialSpins * 360f) + (360f - targetAngle);
+
+            yield return _rewardRadialLayout.transform.DOLocalRotate(new Vector3(0, 0, totalRotation), _spinDuration, RotateMode.FastBeyond360)
+                .SetEase(_spinEase).WaitForCompletion();
+            
+            
+        }
+        
+        
+        
         
     }
 }

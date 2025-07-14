@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession;
+using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.Rewards;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap;
 using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
 using VertigoRouletteMiniGame.ApplicationFlow.RouletteZoneMap;
+using Random = UnityEngine.Random;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession
 {
@@ -21,6 +24,18 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession
         private MiniGameConfiguration miniGameConfiguration;
         private EVictoryStatus status = EVictoryStatus.None;
         private ZoneMapInstance zoneMapInstance;
+        
+        
+        public ZoneMapInstance GetZoneMapInstance()
+        {
+            return zoneMapInstance;
+        }
+
+        public ZoneInstance GetActiveZoneInstance()
+        {
+            return zoneMapInstance.GetActiveZoneInstance();
+        }
+
         
         public IEnumerator Initialize(MiniGameConfiguration miniGameConfiguration)
         {
@@ -39,18 +54,30 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession
 
             ZoneMapConfigurationBase zoneMapConfiguration = loadAssetAsync.Result;
             zoneMapInstance = new ZoneMapInstance(zoneMapConfiguration);
+
+            yield return zoneMapInstance.GetActiveZoneInstance().InitializeRouletteInstance();
             
             yield return null;
         }
 
-
-        public List<ZoneInstance> GetZoneInstances()
-        {
-            if (zoneMapInstance == null)
-                return null;
-            return zoneMapInstance.ZoneInstances;
-        }
       
+      
+        public IEnumerator SpinRoulette()
+        {
+            ZoneInstance zoneInstance = zoneMapInstance.GetActiveZoneInstance();
+            yield return zoneInstance.SpinRouletteZone();
+            if (zoneMapInstance.TryMakeNextZoneActive())
+            {
+                zoneInstance = zoneMapInstance.GetActiveZoneInstance();
+                yield return zoneInstance.InitializeRouletteInstance();
+            }
+            
+        }
+
+        public void AddReward(RouletteRewardConfiguration rouletteRewardConfiguration)
+        {
+            obtainedRewardInventory.IncreaseCount(rouletteRewardConfiguration.ItemDefinition.AssetGUID,rouletteRewardConfiguration.Amount);
+        }
        
         
         

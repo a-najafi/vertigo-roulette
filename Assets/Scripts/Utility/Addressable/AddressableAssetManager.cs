@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -12,13 +13,13 @@ namespace Utility.Addressable
 
         public static IEnumerator LoadAsset<T>(AssetReference reference, Action<T> onComplete)
         {
-            string key = reference.AssetGUID;
+            string key = reference.RuntimeKey.ToString();
 
             if (_handles.TryGetValue(key, out var existingHandle))
             {
-                if (existingHandle.IsDone)
+                if (existingHandle.IsDone && existingHandle.Result is T existingResult)
                 {
-                    onComplete?.Invoke((T)existingHandle.Result);
+                    onComplete?.Invoke(existingResult);
                     yield break;
                 }
             }
@@ -30,12 +31,16 @@ namespace Utility.Addressable
 
             var finalHandle = _handles[key];
             yield return finalHandle;
-            onComplete?.Invoke((T)finalHandle.Result);
+
+            if (finalHandle.Status == AsyncOperationStatus.Succeeded)
+                onComplete?.Invoke((T)finalHandle.Result);
+            else
+                Debug.LogError($"Failed to load addressable asset: {key}");
         }
 
         public static void Release(AssetReference reference)
         {
-            string key = reference.AssetGUID;
+            string key = reference.RuntimeKey.ToString();
 
             if (_handles.TryGetValue(key, out var handle) && handle.IsValid())
             {
@@ -54,4 +59,5 @@ namespace Utility.Addressable
             _handles.Clear();
         }
     }
+
 }

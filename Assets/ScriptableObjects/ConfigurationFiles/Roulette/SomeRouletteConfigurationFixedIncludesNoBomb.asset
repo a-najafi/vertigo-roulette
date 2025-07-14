@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7654129817c64068ba4b4905f12dab68, type: 3}
-  m_Name: SomeRouletteConfigurationFixedIncludesBomb
+  m_Name: SomeRouletteConfigurationFixedIncludesNoBomb
   m_EditorClassIdentifier: 
   _rouletteRewardConfigurations:
   - _itemDefinition:
@@ -70,10 +70,10 @@ MonoBehaviour:
     _probabilityModifier: 0
     _isBomb: 0
   - _itemDefinition:
-      m_AssetGUID: 7a461020240681d46b840abbb9e89c6d
+      m_AssetGUID: 8a83da22173ee3741a881a073aaa38c9
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    _amount: -1
+    _amount: 22
     _probabilityModifier: 0
-    _isBomb: 1
+    _isBomb: 0

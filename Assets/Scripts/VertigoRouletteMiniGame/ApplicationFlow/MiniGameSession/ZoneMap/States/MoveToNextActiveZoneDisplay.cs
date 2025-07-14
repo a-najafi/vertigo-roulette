@@ -6,16 +6,15 @@ using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.States
 {
-    public class InitializeZoneMapDisplay : MiniGameSessionStateComponentBase
+    public class MoveToNextActiveZoneDisplay : MiniGameSessionStateComponentBase
     {
-        [SerializeField] private ZoneMapDisplayComponent zoneMapDisplayComponent;
+        [SerializeField] private ZoneMapDisplayComponent _zoneMapDisplayComponent;
         public override IEnumerator OnEnter(IStateMachine stateMachine)
         {
             yield return base.OnEnter(stateMachine);
-
-            yield return zoneMapDisplayComponent.InitializeZones(miniGameSessionComponent.GetZoneMapInstance());
+            yield return _zoneMapDisplayComponent.MoveZonesNextByOne(miniGameSessionComponent.GetZoneMapInstance());
             
-
         }
+        
     }
 }

@@ -8,8 +8,13 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
     
     public abstract class ZoneMapConfigurationBase : ScriptableObject
     {
-        public virtual void ProvideZoneConfiguration(int currentProgression, int maxProgression,
+        public virtual void GetZoneConfigurations(int index, int count,
             out List<ZoneConfiguration> zoneConfigurations)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual ZoneConfiguration GetZoneConfiguration(int index)
         {
             throw new System.NotImplementedException();
         }

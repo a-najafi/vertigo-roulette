@@ -28,34 +28,58 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
     public class ZoneMapConfigurationHopping : ZoneMapConfigurationBase
     {
         [SerializeField]private List<HoppingZone> _hoppingZoneConfigurations;
-        
-        public override void ProvideZoneConfiguration(int currentProgression, int maxProgression,
+
+
+        public override void GetZoneConfigurations(int index, int count,
             out List<ZoneConfiguration> zoneConfigurations)
         {
             
-            if (maxProgression > 0 && currentProgression > maxProgression)
-                throw new System.Exception("Provided progression is out of range.");
             zoneConfigurations = new List<ZoneConfiguration>();
             
             _hoppingZoneConfigurations.Sort(CompareHoppingZones);
 
-            for (int progression = currentProgression; progression < maxProgression; progression++)
+            for (int i = index; i < index + count ; i++)
             {
-                //if it is the first zone use most common
-                if(progression == 0)
+                if (i == 0)
+                {
                     zoneConfigurations.Add(_hoppingZoneConfigurations[0].ZoneConfiguration);
+                    continue;
+                }
                 else
                 {
+                    bool foundZoneConfiguration = false;
                     for (int j = _hoppingZoneConfigurations.Count - 1; j >= 0; j--)
                     {
-                        if (progression % _hoppingZoneConfigurations[j].HoppingIndex == 0)
+                        if (i % _hoppingZoneConfigurations[j].HoppingIndex == 0)
                         {
                             zoneConfigurations.Add(_hoppingZoneConfigurations[j].ZoneConfiguration);
+                            foundZoneConfiguration = true;
                             break;
                         }
-                    }
-                    throw new Exception("Current Hopping Zone Configuration is not supported. To fix this issue easily add hopping zone with hopping index of 1 as default.");
+                    }    
+                    if(!foundZoneConfiguration)
+                        throw new Exception("Current Hopping Zone Configuration is not supported. To fix this issue easily add hopping zone with hopping index of 1 as default.");
                 }
+                
+            }
+        }
+        
+
+        public override ZoneConfiguration GetZoneConfiguration(int index)
+        {
+            if (index == 0)
+                return _hoppingZoneConfigurations[0].ZoneConfiguration;
+            else
+            {
+                for (int j = _hoppingZoneConfigurations.Count - 1; j >= 0; j--)
+                {
+                    if (index % _hoppingZoneConfigurations[j].HoppingIndex == 0)
+                    {
+                        return _hoppingZoneConfigurations[j].ZoneConfiguration;
+                    }
+                }    
+                throw new Exception("Current Hopping Zone Configuration is not supported. To fix this issue easily add hopping zone with hopping index of 1 as default.");
+
             }
         }
 

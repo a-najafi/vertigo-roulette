@@ -57,7 +57,7 @@ public class RadialLayout : MonoBehaviour
         }
     }
 
-    private void ApplyLayout()
+    public void ApplyLayout()
     {
         if (_rectTransform == null || _children.Count == 0 || slotCount <= 0)
             return;

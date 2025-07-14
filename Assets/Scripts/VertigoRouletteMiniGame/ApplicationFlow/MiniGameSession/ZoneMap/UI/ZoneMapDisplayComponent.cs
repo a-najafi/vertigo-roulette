@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
@@ -14,7 +16,6 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
         [SerializeField]private int _numberOfZonesToDisplay = 5;
         [SerializeField] private GameObject _zoneDisplayPrefab = null;
         [SerializeField] private RectTransform _zoneDisplayParent = null;
-        private int currentActiveZoneIndex = -1;
 
 
 
@@ -36,15 +37,17 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
             }
         }
 
-        public int ConvertZoneIndexToZonesToDisplayIndex(int zoneIndex)
+        protected int MaxOffset => ((_numberOfZonesToDisplay / 2) + 1);
+
+        public int ConvertZoneIndexToZonesToDisplayIndex(int zoneIndex, int activeZoneIndex)
         {
             int currentActiveZoneToDisplayIndex = CurrentActiveZoneToDisplayIndex;
             if(zoneIndex == currentActiveZoneToDisplayIndex)
                 return currentActiveZoneToDisplayIndex;
-            else if (zoneIndex > currentActiveZoneIndex)
-                return currentActiveZoneToDisplayIndex + (zoneIndex - currentActiveZoneIndex);
+            else if (zoneIndex > activeZoneIndex)
+                return currentActiveZoneToDisplayIndex + (zoneIndex - activeZoneIndex);
             else //if(zoneIndex < currentActiveZoneIndex)
-                return currentActiveZoneToDisplayIndex - (zoneIndex - currentActiveZoneIndex);
+                return currentActiveZoneToDisplayIndex - (zoneIndex - activeZoneIndex);
         }
 
 
@@ -54,16 +57,14 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
             yield return null;
         }
 
-        public IEnumerator InitializeZones(List<ZoneInstance> zones)
+        public IEnumerator InitializeZones(ZoneMapInstance zoneMapInstance, int activeZoneIndex = 0)
         {
             CanvasPointDivider.DivideHorizontally(_canvas.GetComponent<RectTransform>(), _numberOfZonesToDisplay,out zoneDisplayPositions,out zoneDisplaySpacing,true);
-
-
-            currentActiveZoneIndex = 0;
+            
 
             //group of zone instances we want to display
-            int leftMostZoneDisplayIndex = Mathf.Max(0, currentActiveZoneIndex - ((_numberOfZonesToDisplay / 2) + 1));
-            int rightMostZoneDisplayIndex = Mathf.Min(zones.Count -1,currentActiveZoneIndex + ((_numberOfZonesToDisplay / 2) + 1) );
+            int leftMostZoneDisplayIndex = Mathf.Max(0, activeZoneIndex - MaxOffset);
+            int rightMostZoneDisplayIndex = zoneMapInstance.MaxProgression > 0 ? Mathf.Min(zoneMapInstance.MaxProgression,activeZoneIndex + MaxOffset ) : activeZoneIndex + MaxOffset;
 
             List<IEnumerator> initZoneDisplayRoutines = new List<IEnumerator>();
             
@@ -71,50 +72,144 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
             
             for (int i = leftMostZoneDisplayIndex; i < rightMostZoneDisplayIndex; i++)
             {
-                int zoneDisplayIndex = ConvertZoneIndexToZonesToDisplayIndex(i);
-                GameObject zoneDisplayGameObject = Instantiate(_zoneDisplayPrefab, _zoneDisplayParent);
-                RectTransform zoneDisplayRectTransform = zoneDisplayGameObject.GetComponent<RectTransform>();
-                
-                zoneDisplayRectTransform.anchoredPosition = zoneDisplayPositions[zoneDisplayIndex];
-                
-                ZoneDisplayComponent zoneDisplay = zoneDisplayGameObject.GetComponent<ZoneDisplayComponent>();
-                
+                int zoneDisplayIndex = ConvertZoneIndexToZonesToDisplayIndex(i, activeZoneIndex);
+                ZoneDisplayComponent zoneDisplay = AddDisplayZone(zoneDisplayIndex);
+                zoneDisplays.Add(zoneDisplayIndex, zoneDisplay);
                 //instead of yield return zoneDisplay.Initialize(zones[i],zoneDisplayIndex);
-                initZoneDisplayRoutines.Add(zoneDisplay.Initialize(zones[i],zoneDisplayIndex));
+                initZoneDisplayRoutines.Add(zoneDisplay.Initialize(zoneMapInstance.GetZoneInstance(i)));
                 
-                zoneDisplays.Add(zoneDisplayIndex,zoneDisplay);
+                
             }
             yield return this.WaitForAll(initZoneDisplayRoutines);
-        }
-
-        private ZoneDisplayComponent CreateZoneDisplay(ZoneInstance zone)
-        {
-            return null;
-        }
-
-        protected void SpawnZoneUIElementAtZoneIndex(int zoneIndex)
-        {
+            
+            
+            
             
         }
 
-        public IEnumerator UpdateActiveZone(int activeZoneIndex, List<ZoneInstance> zones)
+        public ZoneDisplayComponent AddDisplayZone(int zoneDisplayIndex)
         {
-            /*
-            if (currentActiveZoneIndex != activeZoneIndex)
+            GameObject zoneDisplayGameObject = Instantiate(_zoneDisplayPrefab, _zoneDisplayParent);
+            RectTransform zoneDisplayRectTransform = zoneDisplayGameObject.GetComponent<RectTransform>();
+                
+            zoneDisplayRectTransform.anchoredPosition = zoneDisplayPositions[zoneDisplayIndex];
+            return zoneDisplayGameObject.GetComponent<ZoneDisplayComponent>();
+        }
+
+        public IEnumerator MoveZonesNextByOne(ZoneMapInstance zoneMapInstance)
+        {
+            Sequence parallelSequence = DOTween.Sequence();
+            int lastActiveZoneIndex = GetActiveZoneDisplay().ZoneInstance.ZoneIndex;
+            int newActiveZoneIndex = lastActiveZoneIndex + 1;
+            
+            bool leavingZoneIsReplacing = false;
+            for (int i = 0; i < _numberOfZonesToDisplay + 2; i++)
             {
-                if (zoneDisplayPrefab == null)
+                if (zoneDisplays.ContainsKey(i))
                 {
-                    var loadZoneUIElementPrefab = _zoneDisplayPrefabAssetReference.LoadAssetAsync<GameObject>();
-                    yield return loadZoneUIElementPrefab;
-                    zoneDisplayPrefab = loadZoneUIElementPrefab.Result;
-                }    
+                    if (i == 0)
+                    {
+                        //move cached 
+                        zoneDisplays[i].GetComponent<RectTransform>().anchoredPosition = zoneDisplayPositions[_numberOfZonesToDisplay+1];
+                        yield return zoneDisplays[i].Initialize(zoneMapInstance.GetZoneInstance(lastActiveZoneIndex + MaxOffset ));
+                        
+                        parallelSequence.Join(zoneDisplays[i].GetComponent<RectTransform>()
+                            .DOAnchorPos(zoneDisplayPositions[_numberOfZonesToDisplay], 1f).SetEase(Ease.OutBounce));  
+                        
+                        leavingZoneIsReplacing = true;
+                    }
+                    else
+                    {
+                        parallelSequence.Join(zoneDisplays[i].GetComponent<RectTransform>()
+                            .DOAnchorPos(zoneDisplayPositions[i -1], 1f).SetEase(Ease.OutBounce));    
+                    }
+                }
+                else if (i - 1 > CurrentActiveZoneToDisplayIndex)
+                {
+                    if (i - 1 != _numberOfZonesToDisplay || !leavingZoneIsReplacing)
+                    {
+                        ZoneDisplayComponent zoneDisplay = AddDisplayZone(i);
+                        yield return zoneDisplay.Initialize(zoneMapInstance.GetZoneInstance(zoneMapInstance.ActiveZoneIndex + (i - CurrentActiveZoneToDisplayIndex - 1)));
+                        zoneDisplays.Add(i, zoneDisplay);
+                        parallelSequence.Join(zoneDisplays[i].GetComponent<RectTransform>()
+                            .DOAnchorPos(zoneDisplayPositions[i -1], 1f).SetEase(Ease.OutBounce));    
+                    }
+                }
+                
             }
+
+        
+
+            yield return parallelSequence.WaitForCompletion();
+
+            ZoneDisplayComponent lastZoneDisplay = null;
+            for (int i = 0; i < _numberOfZonesToDisplay + 2; i++)
+            {
+
+
+
+                if (i == 0 && zoneDisplays.ContainsKey(i))
+                {
+                    lastZoneDisplay = zoneDisplays[i];
+                }
+
+
+                if (i + 1 < _numberOfZonesToDisplay + 2)
+                {
+                    if (zoneDisplays.ContainsKey(i + 1))
+                        zoneDisplays[i] = zoneDisplays[i + 1];
+                    else
+                    {
+                        zoneDisplays.Remove(i);
+                    }
+                }
+                else if(i == _numberOfZonesToDisplay + 1 && lastZoneDisplay != null)
+                {
+                    zoneDisplays[i] = lastZoneDisplay;
+                }
+                else
+                {
+                    zoneDisplays.Remove(i);
+                }
+            }
+
             
-            */
+
+            //update zoneDisplays so all zone displays match their key index with their position on zoneDisplayPositions
             
             
-            yield return null;
+
+
         }
+        
+
+        public ZoneDisplayComponent GetActiveZoneDisplay()
+        {
+            int activeZoneDisplayIndex = CurrentActiveZoneToDisplayIndex;
+            if (activeZoneDisplayIndex < 0 || activeZoneDisplayIndex >= _numberOfZonesToDisplay)
+                return null;
+            if (!zoneDisplays.ContainsKey(CurrentActiveZoneToDisplayIndex))
+                return null;
+            return zoneDisplays[CurrentActiveZoneToDisplayIndex];
+        }
+        
+
+        public IEnumerator DisplayRewardOnActiveZone()
+        {
+            yield return zoneDisplays[CurrentActiveZoneToDisplayIndex].DisplayFinalReward();
+        }
+
+        // public IEnumerator UpdateActiveZone(int newZoneIndex)
+        // {
+        //     if(newZoneIndex < 0 || newZoneIndex >= zoneDisplays.Count)
+        //         return null;
+        //     
+        //     
+        //     
+        //     
+        // }
+
+     
         
         
     }

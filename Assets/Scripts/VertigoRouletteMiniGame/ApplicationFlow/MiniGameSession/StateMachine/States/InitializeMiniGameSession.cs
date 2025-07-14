@@ -24,8 +24,6 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.StateMachine.S
 
             yield return miniGameSessionComponent.Initialize(loadAssetAsync.Result);
 
-            
-
         }
     }
 }
