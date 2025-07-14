@@ -90,6 +90,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
         public ZoneDisplayComponent AddDisplayZone(int zoneDisplayIndex)
         {
             GameObject zoneDisplayGameObject = Instantiate(_zoneDisplayPrefab, _zoneDisplayParent);
+            zoneDisplayGameObject.name = _zoneDisplayPrefab.name +"_"+_zoneDisplayParent.childCount.ToString();
             RectTransform zoneDisplayRectTransform = zoneDisplayGameObject.GetComponent<RectTransform>();
                 
             zoneDisplayRectTransform.anchoredPosition = zoneDisplayPositions[zoneDisplayIndex];
@@ -99,8 +100,8 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
         public IEnumerator MoveZonesNextByOne(ZoneMapInstance zoneMapInstance)
         {
             Sequence parallelSequence = DOTween.Sequence();
-            int lastActiveZoneIndex = GetActiveZoneDisplay().ZoneInstance.ZoneIndex;
-            int newActiveZoneIndex = lastActiveZoneIndex + 1;
+            int lastActiveZoneIndex = GetActiveZoneDisplay().ZoneInstance.ZoneIndex; //error at 4
+            int newActiveZoneIndex = lastActiveZoneIndex + 1; // at 5   
             
             bool leavingZoneIsReplacing = false;
             for (int i = 0; i < _numberOfZonesToDisplay + 2; i++)
@@ -126,12 +127,12 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
                 }
                 else if (i - 1 > CurrentActiveZoneToDisplayIndex)
                 {
-                    if (i - 1 != _numberOfZonesToDisplay || !leavingZoneIsReplacing)
+                    if (!leavingZoneIsReplacing)
                     {
                         ZoneDisplayComponent zoneDisplay = AddDisplayZone(i);
                         yield return zoneDisplay.Initialize(zoneMapInstance.GetZoneInstance(zoneMapInstance.ActiveZoneIndex + (i - CurrentActiveZoneToDisplayIndex - 1)));
-                        zoneDisplays.Add(i, zoneDisplay);
-                        parallelSequence.Join(zoneDisplays[i].GetComponent<RectTransform>()
+                        zoneDisplays.Add(0, zoneDisplay);
+                        parallelSequence.Join(zoneDisplays[0].GetComponent<RectTransform>()
                             .DOAnchorPos(zoneDisplayPositions[i -1], 1f).SetEase(Ease.OutBounce));    
                     }
                 }
@@ -141,37 +142,33 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
         
 
             yield return parallelSequence.WaitForCompletion();
-
-            ZoneDisplayComponent lastZoneDisplay = null;
-            for (int i = 0; i < _numberOfZonesToDisplay + 2; i++)
+ 
+            zoneDisplays.TryGetValue(0, out ZoneDisplayComponent lastZoneDisplay);
+            int finalIndex = _numberOfZonesToDisplay + 1;
+            
+            for (int i = 0; i < _numberOfZonesToDisplay; i++)
             {
-
-
-
-                if (i == 0 && zoneDisplays.ContainsKey(i))
+                if (zoneDisplays.ContainsKey(i + 1))
                 {
-                    lastZoneDisplay = zoneDisplays[i];
-                }
-
-
-                if (i + 1 < _numberOfZonesToDisplay + 2)
-                {
-                    if (zoneDisplays.ContainsKey(i + 1))
-                        zoneDisplays[i] = zoneDisplays[i + 1];
-                    else
-                    {
-                        zoneDisplays.Remove(i);
-                    }
-                }
-                else if(i == _numberOfZonesToDisplay + 1 && lastZoneDisplay != null)
-                {
-                    zoneDisplays[i] = lastZoneDisplay;
+                    zoneDisplays[i] = zoneDisplays[i + 1];
                 }
                 else
                 {
                     zoneDisplays.Remove(i);
                 }
             }
+            zoneDisplays.Remove(finalIndex);
+            // Assign the recycled zone display to the final slot
+            
+            if (lastZoneDisplay != null)
+            {
+                zoneDisplays[_numberOfZonesToDisplay] = lastZoneDisplay;
+            }
+            else
+            {
+                zoneDisplays.Remove(_numberOfZonesToDisplay);
+            }
+
 
             
 

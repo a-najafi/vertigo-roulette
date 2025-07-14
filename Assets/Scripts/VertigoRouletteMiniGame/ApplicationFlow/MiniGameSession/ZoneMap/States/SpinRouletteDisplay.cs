@@ -12,10 +12,11 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.States
         public override IEnumerator OnEnter(IStateMachine stateMachine)
         {
             yield return base.OnEnter(stateMachine);
-            yield return _zoneMapDisplayComponent.GetActiveZoneDisplay()
+            ZoneDisplayComponent activeZoneDisplayComponent = _zoneMapDisplayComponent.GetActiveZoneDisplay();
+            yield return activeZoneDisplayComponent
                 .SpinRoulette(miniGameSessionComponent.GetActiveZoneInstance().RouletteInstance.ResultIndex);
 
-            yield return _zoneMapDisplayComponent.GetActiveZoneDisplay().DisplayFinalReward();
+            yield return activeZoneDisplayComponent.DisplayFinalReward();
         }
     }
 }
