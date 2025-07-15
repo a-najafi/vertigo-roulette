@@ -18,7 +18,6 @@ This project is ready to serve as the foundation for roulette/progression miniga
 - [How to Configure](#how-to-configure)
 - [Extending the Framework](#extending-the-framework)
 - [Best Practices](#best-practices)
-- [License](#license)
 
 ---
 
@@ -171,12 +170,6 @@ This project is ready to serve as the foundation for roulette/progression miniga
 - **Release Addressables** only when no longer needed to avoid memory leaks.
 - **Use base classes** for state/transition logic to ensure coroutine compatibility.
 - **Leverage custom inspector tools** for safer, faster configuration.
-
----
-
-## License
-
-Replace with your license (MIT, Apache, proprietary, etc.)
 
 ---
 
