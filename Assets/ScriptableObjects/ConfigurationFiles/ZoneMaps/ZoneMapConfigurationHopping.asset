@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9a00cf4af44db993c8484eb1d76d0a, type: 3}
+  m_Name: ZoneMapConfigurationHopping
+  m_EditorClassIdentifier: 
+  _hoppingZoneConfigurations:
+  - _hoppingIndex: 1
+    _zoneConfiguration: {fileID: 11400000, guid: e11607d725ad6f14ba44b1497030d119, type: 2}
+  - _hoppingIndex: 5
+    _zoneConfiguration: {fileID: 11400000, guid: aae37966c22c57b4f9b5ba3344b78551, type: 2}
+  - _hoppingIndex: 30
+    _zoneConfiguration: {fileID: 11400000, guid: 3e82313a831cf084e9765baeeab7218a, type: 2}
