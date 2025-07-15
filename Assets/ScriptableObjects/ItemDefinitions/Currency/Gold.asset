@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffbc608536eb4af28ab97686b1dd7335, type: 3}
-  m_Name: SomeItem
+  m_Name: Gold
   m_EditorClassIdentifier: 
-  _uniqueId: SomeItem
-  _name: SomeItem
-  _description: This is some item
+  _uniqueId: fb67d4cd3525e1f479ec9d035ff90009
+  _name: Gold
+  _description: Use Gold to buy stuff
   _icon:
-    m_AssetGUID: 7cb35677544e8e24cb20f5b41ad8f759
-    m_SubObjectName: UI_icon_chest_Bronze_nolight
+    m_AssetGUID: 672a011abbbfa52459e2976100376e5b
+    m_SubObjectName: UI_icon_gold
     m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
-  _type: 2
+  _type: 1

@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
-using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory;
 
 namespace VertigoRouletteMiniGameEditor
 {

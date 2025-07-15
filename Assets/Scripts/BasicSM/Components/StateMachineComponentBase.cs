@@ -180,13 +180,28 @@ namespace BasicSM
             yield return States[currentStateIndex].State.OnUpdate(this);
             
             int stateTransitionCount = States[currentStateIndex].Transitions.Count;
+            if (stateTransitionCount != States[currentStateIndex].Transitions.Count)
+            {
+                Debug.Log("WTF");
+            }
             for (int i = 0; i < stateTransitionCount; i++)
             {
+                if (currentStateIndex >= States.Count )
+                {
+                    Debug.Log("Transition Failed: index out of range states.");
+                }
+                else if (i >= States[currentStateIndex].Transitions.Count)
+                {
+                    Debug.Log("Transition Failed: index out of range transitions.");
+                }
                 if (States[currentStateIndex].Transitions[i].ShouldTransition(this))
                 {
                     int targetStateIndex = GetStateIndex(States[currentStateIndex].Transitions[i].TargetState);
-                    if(targetStateIndex >= 0)
+                    if (targetStateIndex >= 0)
+                    {
                         yield return TransitionState(currentStateIndex,targetStateIndex);
+                        yield break;
+                    }
                 }
             }
         }

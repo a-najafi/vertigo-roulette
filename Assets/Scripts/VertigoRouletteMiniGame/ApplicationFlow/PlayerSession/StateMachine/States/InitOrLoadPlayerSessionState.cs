@@ -7,6 +7,7 @@ using BasicSM;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Utility.Addressable;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine.States
 {
@@ -15,15 +16,16 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine.Sta
         [SerializeField]private AssetLabelReference _activePlayerSessionStartingConfigLabel;
         
 
-        private static string SavePath => Path.Combine(Application.persistentDataPath, "playerSession_save.json");
+
 
         public override IEnumerator OnEnter(IStateMachine stateMachine)
         {
             yield return base.OnEnter(stateMachine);
-            
-            yield return LoadPlayerSession();
-
-            if (playerSessionComponent.Session == null)
+            AssetLoadResult<PlayerSession> loadedPlayerSession = new AssetLoadResult<PlayerSession>();
+            yield return PlayerSession.LoadPlayerSession(loadedPlayerSession, SavePaths.PlayerSession);
+            if(loadedPlayerSession.Asset != null)
+                playerSessionComponent.Initialize(loadedPlayerSession.Asset);
+            else
                 yield return InitializePlayerSession();
         }
 
@@ -42,18 +44,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine.Sta
             yield return null;
         }
 
-        public IEnumerator LoadPlayerSession()
-        {
-            var readAllTextAsync = File.ReadAllTextAsync(SavePath);
-            yield return readAllTextAsync;
-            if (readAllTextAsync.IsCompletedSuccessfully)
-            {
-                PlayerSession playerSession =  JsonUtility.FromJson<PlayerSession>(readAllTextAsync.Result);
-                if(playerSession != null)
-                    playerSessionComponent.Initialize(playerSession);    
-            }
-            
-        }
+      
 
         public IEnumerator InitializePlayerSession()
         {
@@ -75,17 +66,10 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine.Sta
             {
                 playerSession.Inventory.IncreaseCount(playerSessionStartingConfig.PlayerInventoryItemDesigns[i].ItemDefinitionAssetReference.AssetGUID,playerSessionStartingConfig.PlayerInventoryItemDesigns[i].Count);
             }
-
-            yield return SavePlayerSession(playerSession);
+            yield return PlayerSession.SavePlayerSession(playerSession, SavePaths.PlayerSession);
 
         }
 
-        public IEnumerator SavePlayerSession(PlayerSession playerSession)
-        {
-            string json = JsonUtility.ToJson(playerSession, true);
-            Task writeAsyncOperationHandle= File.WriteAllTextAsync(SavePath, json);
-            yield return writeAsyncOperationHandle;
-            
-        }
+      
     }
 }

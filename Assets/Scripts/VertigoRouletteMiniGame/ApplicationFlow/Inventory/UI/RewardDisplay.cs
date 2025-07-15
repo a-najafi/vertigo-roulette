@@ -3,23 +3,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility.Addressable;
-using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.Rewards;
-using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory;
 
-namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.UI
+namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory.UI
 {
     public class RewardDisplay : MonoBehaviour
     {
         [SerializeField]private Image _image;
         [SerializeField]private TextMeshProUGUI _text;
 
+        private ItemDefinition itemDefinition;
+
+        public ItemDefinition ItemDefinition => itemDefinition;
+
         public IEnumerator Initialize(ItemDefinition item, int amount = -1)
         {
+            itemDefinition  = item;
             _text.enabled = amount >= 0;
             _text.text = GetAmount(amount);
-            
-            yield return AddressableAssetManager.LoadAsset<Sprite>(item.Icon,
-                (rewardIcon => _image.sprite = rewardIcon));
+            var loadItemSpriteHandle = new AssetLoadResult<Sprite>();
+            yield return AddressableAssetManager.LoadAsset<Sprite>(item.Icon, loadItemSpriteHandle);
+            _image.sprite = loadItemSpriteHandle.Asset;
         }
 
         public string GetAmount(int amount)

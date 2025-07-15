@@ -1,17 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utility.Addressable;
-using Utility.Couroutine;
 using Utility.UI;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.Rewards;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap;
-using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory.UI;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.UI
 {
@@ -29,22 +26,16 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSessio
 
         public IEnumerator Initialize(ZoneInstance zoneInstance)
         {
-            
+            var loadRouletteSpriteHandle = new AssetLoadResult<Sprite>();
             yield return AddressableAssetManager.LoadAsset<Sprite>(zoneInstance.ZoneConfiguration.RouletteSprite,
-                 sprite =>
-                 {
-                     _rouletteImage.sprite = null;
-                     _rouletteImage.sprite = sprite;
-                 });
+                loadRouletteSpriteHandle);
+            _rouletteImage.sprite = loadRouletteSpriteHandle.Asset;
             
-            
+            var loadRoulettePinSpriteHandle = new AssetLoadResult<Sprite>();
             yield return AddressableAssetManager.LoadAsset<Sprite>(zoneInstance.ZoneConfiguration.RoulettePinSprite,
-                pinSprite =>
-                {
-                    _roulettePinImage.sprite = null;
-                    _roulettePinImage.sprite = pinSprite;
-                });
-
+                loadRoulettePinSpriteHandle);
+            _roulettePinImage.sprite = loadRoulettePinSpriteHandle.Asset;
+                
             if (zoneInstance.RouletteInstance != null)
             {
                 _rewardRadialLayout.enabled = false;
@@ -63,28 +54,25 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSessio
         protected IEnumerator AddRewardDisplay(RouletteRewardConfiguration rouletteRewardConfiguration, int index)
         {
 
-            IEnumerator initializeDisplayRoutine = null;
             //Action<ItemDefinition> onItemDefinitionLoaded = 
+            var loadItemDefinitionHandle = new AssetLoadResult<ItemDefinition>();
             yield return AddressableAssetManager.LoadAsset<ItemDefinition>(rouletteRewardConfiguration.ItemDefinition,
-                definition =>
-                {
-                    RewardDisplay rewardDisplay;
-                    if (_rewardDisplays.ContainsKey(index))
-                    {
-                        //Debug.Log("Reward Display Found for " + index + " using it");
-                        rewardDisplay = _rewardDisplays[index];
-                    }
-                    else
-                    {
-                        //Debug.Log("Reward Display Not Found for " + index + " adding new reward display");
-                        GameObject gameObject = Instantiate(_rewardDisplayPrefab, _rewardRadialLayout.transform, false);
-                         rewardDisplay = gameObject.GetComponent<RewardDisplay>();    
-                         _rewardDisplays.Add(index,rewardDisplay);
-                    }
-                    initializeDisplayRoutine = rewardDisplay.Initialize(definition, rouletteRewardConfiguration.Amount); 
-                });
-
-            yield return initializeDisplayRoutine;
+                loadItemDefinitionHandle);
+            
+            RewardDisplay rewardDisplay;
+            if (_rewardDisplays.ContainsKey(index))
+            {
+                //Debug.Log("Reward Display Found for " + index + " using it");
+                rewardDisplay = _rewardDisplays[index];
+            }
+            else
+            {
+                //Debug.Log("Reward Display Not Found for " + index + " adding new reward display");
+                GameObject gameObject = Instantiate(_rewardDisplayPrefab, _rewardRadialLayout.transform, false);
+                rewardDisplay = gameObject.GetComponent<RewardDisplay>();    
+                _rewardDisplays.Add(index,rewardDisplay);
+            }
+            yield return rewardDisplay.Initialize(loadItemDefinitionHandle.Asset, rouletteRewardConfiguration.Amount);
         }
 
         

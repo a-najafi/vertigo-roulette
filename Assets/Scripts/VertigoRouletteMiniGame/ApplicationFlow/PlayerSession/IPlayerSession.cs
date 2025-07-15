@@ -1,4 +1,4 @@
-using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession
 {

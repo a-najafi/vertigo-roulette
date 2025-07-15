@@ -13,7 +13,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSessio
         [SerializeField] private int _amount = -1;
         [SerializeField] private float _probabilityModifier = 1;
         [SerializeField] private bool _isBomb;
-        
+#if UNITY_EDITOR
+        [SerializeField,ReadOnly] public float occurenceChance = 0;
+#endif
         public float ProbabilityModifier => _probabilityModifier;
         public int Amount => _amount;
         public bool IsBomb => _isBomb;
