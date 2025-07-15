@@ -1,0 +1,117 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
+namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
+{
+    [Serializable]
+    public class PlayerInventoryItem
+    {
+        [SerializeField]private string _itemUniqueId = "Invalid";
+        [SerializeField]private int _count = 0;
+        public string ItemUniqueId => _itemUniqueId;
+        public int Count
+        {
+            get => _count;
+            set => _count = value;
+        }
+
+        public PlayerInventoryItem()
+        {
+            
+        }
+
+        public PlayerInventoryItem(string itemUniqueId, int count)
+        {
+            _itemUniqueId = itemUniqueId;
+            _count = count;
+        }
+        
+        
+    }
+    
+    [Serializable]
+    public class PlayerInventory
+    {
+        
+        [SerializeField]private List<PlayerInventoryItem> playerInventoryItems = new List<PlayerInventoryItem>();
+
+
+        public bool HasItem(string itemUniqueId)
+        {
+            int playerInventoryCount = playerInventoryItems.Count;
+            for (int i = 0; i < playerInventoryCount; i++)
+            {
+                if (playerInventoryItems[i].ItemUniqueId.Equals(itemUniqueId) && playerInventoryItems[i].Count > 0)
+                    return true;
+            }
+            return false;
+        }
+
+        public PlayerInventoryItem GetPlayerInventoryItem(string itemUniqueId)
+        {
+            int playerInventoryCount = playerInventoryItems.Count;
+            for (int i = 0; i < playerInventoryCount; i++)
+            {
+                if (playerInventoryItems[i].ItemUniqueId.Equals(itemUniqueId))
+                    return playerInventoryItems[i];
+            }
+            return null;
+        }
+
+        public List<PlayerInventoryItem> GetInventoryItems()
+        {
+            return playerInventoryItems;
+        }
+
+        public void IncreaseCountByInventory(PlayerInventory playerInventory)
+        {
+            List<PlayerInventoryItem> inventoryItems = playerInventory.playerInventoryItems;
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                IncreaseCount(inventoryItems[i].ItemUniqueId, inventoryItems[i].Count);
+            }
+        }
+        
+        public void DecreaseCountByInventory(PlayerInventory playerInventory)
+        {
+            List<PlayerInventoryItem> inventoryItems = playerInventory.playerInventoryItems;
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                DecreaseCount(inventoryItems[i].ItemUniqueId, inventoryItems[i].Count);
+            }
+        }
+
+        public void IncreaseCount(string itemUniqueId, int amount)
+        {
+            PlayerInventoryItem playerInventoryItem = GetPlayerInventoryItem(itemUniqueId);
+            if (playerInventoryItem == null)
+            {
+                playerInventoryItem = new PlayerInventoryItem(itemUniqueId, 0);
+                playerInventoryItems.Add(playerInventoryItem);
+            }
+            playerInventoryItem.Count += amount;
+        }
+        
+        public bool DecreaseCount(string itemUniqueId, int amount)
+        {
+            PlayerInventoryItem playerInventoryItem = GetPlayerInventoryItem(itemUniqueId);
+            if (playerInventoryItem == null || playerInventoryItem.Count < amount)
+                return false;
+            playerInventoryItem.Count -= amount;
+            if (playerInventoryItem.Count <= 0)
+                playerInventoryItems.Remove(playerInventoryItem);
+            return true;
+        }
+
+        public void ClearInventory()
+        {
+            playerInventoryItems.Clear();
+        }
+        
+        
+    }
+}

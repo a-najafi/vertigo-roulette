@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 046c8bfc0f1578f44bc583442ecabfc3
   m_SerializeEntries:
   - m_GUID: fecdd54edfe1a05468f6400ae778a5b4
-    m_Address: Assets/UI/RouletteMiniGame/Rewards/Skins/SkinIcons.spriteatlas
+    m_Address: SkinIcons
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

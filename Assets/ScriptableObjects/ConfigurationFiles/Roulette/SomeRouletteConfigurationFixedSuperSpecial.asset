@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7654129817c64068ba4b4905f12dab68, type: 3}
+  m_Name: SomeRouletteConfigurationFixedSuperSpecial
+  m_EditorClassIdentifier: 
+  _rouletteRewardConfigurations:
+  - _itemDefinition:
+      m_AssetGUID: a98cf564bdf35b04186e063c639ff1f3
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 1
+    _probabilityModifier: 1
+    _isBomb: 0
+  - _itemDefinition:
+      m_AssetGUID: fb67d4cd3525e1f479ec9d035ff90009
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 5000
+    _probabilityModifier: 1
+    _isBomb: 0
+  - _itemDefinition:
+      m_AssetGUID: 9d2d0a48dc3860740bdc0fe7b4d59a80
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 1
+    _probabilityModifier: 1
+    _isBomb: 0
+  - _itemDefinition:
+      m_AssetGUID: 90544c8b9c57a3b409c1857085f2ebb0
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 1
+    _probabilityModifier: 1
+    _isBomb: 0
+  - _itemDefinition:
+      m_AssetGUID: 9d2d0a48dc3860740bdc0fe7b4d59a80
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 1
+    _probabilityModifier: 1
+    _isBomb: 0
+  - _itemDefinition:
+      m_AssetGUID: de9dea6d14e5f9741902bab48423173a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 1
+    _probabilityModifier: 1
+    _isBomb: 0
+  - _itemDefinition:
+      m_AssetGUID: 51d8827131ac875429cb4de14beb4ae8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 1
+    _probabilityModifier: 1
+    _isBomb: 0
+  - _itemDefinition:
+      m_AssetGUID: 22926452c1542a14ab689ed251f00f6d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    _amount: 100000
+    _probabilityModifier: 1
+    _isBomb: 0

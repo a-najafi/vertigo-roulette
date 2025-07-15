@@ -1,0 +1,19 @@
+{
+    "name": "VertigoRouletteMiniGameEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d5a7cbb86178d2e4db29c69e9fda1a87",
+        "GUID:69448af7b92c7f342b298e06a37122aa"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
