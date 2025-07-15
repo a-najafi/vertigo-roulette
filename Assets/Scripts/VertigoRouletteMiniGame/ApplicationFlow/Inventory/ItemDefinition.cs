@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
 
-namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
+namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
 {
     
     public enum ItemType
@@ -12,6 +12,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
         Chest,
         Skin,
         Upgrade,
+        Consumable,
     }
     
     

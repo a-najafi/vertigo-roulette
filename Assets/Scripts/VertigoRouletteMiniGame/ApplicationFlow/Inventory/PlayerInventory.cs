@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
+namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
 {
     [Serializable]
     public class PlayerInventoryItem
@@ -38,9 +38,18 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
     {
         
         [SerializeField]private List<PlayerInventoryItem> playerInventoryItems = new List<PlayerInventoryItem>();
-        
-        
-        
+
+
+        public bool HasItem(string itemUniqueId)
+        {
+            int playerInventoryCount = playerInventoryItems.Count;
+            for (int i = 0; i < playerInventoryCount; i++)
+            {
+                if (playerInventoryItems[i].ItemUniqueId.Equals(itemUniqueId) && playerInventoryItems[i].Count > 0)
+                    return true;
+            }
+            return false;
+        }
 
         public PlayerInventoryItem GetPlayerInventoryItem(string itemUniqueId)
         {
@@ -51,6 +60,29 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory
                     return playerInventoryItems[i];
             }
             return null;
+        }
+
+        public List<PlayerInventoryItem> GetInventoryItems()
+        {
+            return playerInventoryItems;
+        }
+
+        public void IncreaseCountByInventory(PlayerInventory playerInventory)
+        {
+            List<PlayerInventoryItem> inventoryItems = playerInventory.playerInventoryItems;
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                IncreaseCount(inventoryItems[i].ItemUniqueId, inventoryItems[i].Count);
+            }
+        }
+        
+        public void DecreaseCountByInventory(PlayerInventory playerInventory)
+        {
+            List<PlayerInventoryItem> inventoryItems = playerInventory.playerInventoryItems;
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                DecreaseCount(inventoryItems[i].ItemUniqueId, inventoryItems[i].Count);
+            }
         }
 
         public void IncreaseCount(string itemUniqueId, int amount)

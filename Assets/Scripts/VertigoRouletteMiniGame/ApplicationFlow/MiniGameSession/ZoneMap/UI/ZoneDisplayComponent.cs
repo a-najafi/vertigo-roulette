@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utility.Addressable;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.UI;
-using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory.UI;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 {
@@ -48,12 +49,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
                     break;
             }
 
-            yield return AddressableAssetManager.LoadAsset<Sprite>(spriteRef,
-                sprite =>
-                {
-                    _zoneImage.sprite = sprite;
-                });
-
+            var result = new AssetLoadResult<Sprite> ();
+            yield return AddressableAssetManager.LoadAsset<Sprite>(spriteRef, result);
+            _zoneImage.sprite = result.Asset;
          
 
             
@@ -88,15 +86,16 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
                 throw new NullReferenceException("No Item Reward configuration assigned");
             
             
+            var result = new AssetLoadResult<ItemDefinition>();
             yield return AddressableAssetManager.LoadAsset<ItemDefinition>(
-                zoneInstance.RouletteInstance.ResultRewardConfiguration.ItemDefinition,
-                definition =>
-                {
-                    RewardDisplay _zoneRewardDisplayComponent =
-                        _zoneRewardDisplay.GetComponentInChildren<RewardDisplay>();
-                    if(_zoneRewardDisplayComponent != null)
-                        StartCoroutine(_zoneRewardDisplayComponent.Initialize(definition,zoneInstance.RouletteInstance.ResultRewardConfiguration.Amount));
-                });
+                zoneInstance.RouletteInstance.ResultRewardConfiguration.ItemDefinition, result);
+            
+            RewardDisplay _zoneRewardDisplayComponent =
+                _zoneRewardDisplay.GetComponentInChildren<RewardDisplay>();
+            
+            if(_zoneRewardDisplayComponent != null)
+              yield return _zoneRewardDisplayComponent.Initialize(result.Asset,zoneInstance.RouletteInstance.ResultRewardConfiguration.Amount);
+            
         }
     }
 }

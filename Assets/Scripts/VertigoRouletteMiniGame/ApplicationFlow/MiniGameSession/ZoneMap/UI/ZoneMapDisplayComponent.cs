@@ -20,8 +20,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
 
 
         Dictionary<int,ZoneDisplayComponent> zoneDisplays = new Dictionary<int,ZoneDisplayComponent>();
-        List<GameObject > zoneDisplaysInPool = new List<GameObject>();
-
+        
         private List<Vector2> zoneDisplayPositions = null;
         private float zoneDisplaySpacing = -1;
         
@@ -60,7 +59,6 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
         public IEnumerator InitializeZones(ZoneMapInstance zoneMapInstance, int activeZoneIndex = 0)
         {
             CanvasPointDivider.DivideHorizontally(_canvas.GetComponent<RectTransform>(), _numberOfZonesToDisplay,out zoneDisplayPositions,out zoneDisplaySpacing,true);
-            
 
             //group of zone instances we want to display
             int leftMostZoneDisplayIndex = Mathf.Max(0, activeZoneIndex - MaxOffset);
@@ -94,6 +92,8 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI
             RectTransform zoneDisplayRectTransform = zoneDisplayGameObject.GetComponent<RectTransform>();
                 
             zoneDisplayRectTransform.anchoredPosition = zoneDisplayPositions[zoneDisplayIndex];
+            float width = Mathf.Min(zoneDisplaySpacing * 0.9f, zoneDisplayRectTransform.rect.width);
+            zoneDisplayRectTransform.sizeDelta = new Vector2(width,width);
             return zoneDisplayGameObject.GetComponent<ZoneDisplayComponent>();
         }
 

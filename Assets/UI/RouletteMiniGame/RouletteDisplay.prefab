@@ -131,6 +131,9 @@ MonoBehaviour:
   _roulettePinImage: {fileID: 3098704471393303767}
   _rewardRadialLayout: {fileID: 3291093540171858824}
   _rewardDisplayPrefab: {fileID: 4939048074028409951, guid: f1df534e9aeb9174fb759dcc69822cb7, type: 3}
+  _initialSpins: 5
+  _spinDuration: 4
+  _spinEase: 12
 --- !u!1 &3208084201840776049
 GameObject:
   m_ObjectHideFlags: 0

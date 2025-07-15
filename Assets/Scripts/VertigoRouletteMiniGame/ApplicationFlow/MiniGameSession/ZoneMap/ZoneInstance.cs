@@ -53,11 +53,11 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap
 
         public IEnumerator InitializeRouletteInstance()
         {
-            yield return AddressableAssetManager.LoadAsset<RouletteConfigurationBase>(zoneConfiguration.RouletteConfigAsset,
-                rouletteConfig =>
-                {
-                    rouletteInstance = new RouletteInstance(rouletteConfig);
-                });
+            var result = new AssetLoadResult<RouletteConfigurationBase> ();
+            yield return AddressableAssetManager.LoadAsset<RouletteConfigurationBase>(
+                zoneConfiguration.RouletteConfigAsset, result);
+            rouletteInstance = new RouletteInstance(result.Asset);
+
         }
         
       

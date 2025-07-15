@@ -7,11 +7,17 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Utility.Addressable
 {
+    
+    public class AssetLoadResult<T>
+    {
+        public T Asset;
+    }
+    
     public static class AddressableAssetManager
     {
         private static readonly Dictionary<string, AsyncOperationHandle> _handles = new();
 
-        public static IEnumerator LoadAsset<T>(AssetReference reference, Action<T> onComplete)
+        public static IEnumerator LoadAsset<T>(AssetReference reference, AssetLoadResult<T> resultHolder)
         {
             string key = reference.RuntimeKey.ToString();
 
@@ -19,7 +25,7 @@ namespace Utility.Addressable
             {
                 if (existingHandle.IsDone && existingHandle.Result is T existingResult)
                 {
-                    onComplete?.Invoke(existingResult);
+                    resultHolder.Asset = existingResult;
                     yield break;
                 }
             }
@@ -33,10 +39,11 @@ namespace Utility.Addressable
             yield return finalHandle;
 
             if (finalHandle.Status == AsyncOperationStatus.Succeeded)
-                onComplete?.Invoke((T)finalHandle.Result);
+                resultHolder.Asset = (T)finalHandle.Result;
             else
                 Debug.LogError($"Failed to load addressable asset: {key}");
         }
+
 
         public static void Release(AssetReference reference)
         {

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Utility.Addressable;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.RouletteSession.Rewards;
 using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap;
-using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.Inventory;
+using VertigoRouletteMiniGame.ApplicationFlow.Inventory;
 using VertigoRouletteMiniGame.ApplicationFlow.RouletteZoneMap;
 using Random = UnityEngine.Random;
 
@@ -25,7 +26,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession
         private EVictoryStatus status = EVictoryStatus.None;
         private ZoneMapInstance zoneMapInstance;
         
-        
+        public PlayerInventory ObtainedRewardInventory => obtainedRewardInventory;
         public ZoneMapInstance GetZoneMapInstance()
         {
             return zoneMapInstance;
@@ -43,16 +44,15 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession
             this.obtainedRewardInventory = new PlayerInventory();
             status = EVictoryStatus.None;
             
-            
-            AsyncOperationHandle<ZoneMapConfigurationBase> loadAssetAsync = miniGameConfiguration.ZoneMapConfiguration.LoadAssetAsync<ZoneMapConfigurationBase>();
-            yield return loadAssetAsync;
+            AssetLoadResult<ZoneMapConfigurationBase> loadedZoneMapConfiguration = new AssetLoadResult<ZoneMapConfigurationBase>();
+            yield return AddressableAssetManager.LoadAsset<ZoneMapConfigurationBase>(miniGameConfiguration.ZoneMapConfiguration, loadedZoneMapConfiguration);
 
-            if (loadAssetAsync.Result == null)
+            if (loadedZoneMapConfiguration.Asset == null)
             {
                 throw new System.Exception("Failed to load zone map configuration");
             }
 
-            ZoneMapConfigurationBase zoneMapConfiguration = loadAssetAsync.Result;
+            ZoneMapConfigurationBase zoneMapConfiguration = loadedZoneMapConfiguration.Asset;
             zoneMapInstance = new ZoneMapInstance(zoneMapConfiguration);
 
             yield return zoneMapInstance.GetActiveZoneInstance().InitializeRouletteInstance();
