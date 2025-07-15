@@ -7,14 +7,32 @@ using VertigoRouletteMiniGame.ApplicationFlow.PlayerSession;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.StateMachine.States
 {
+    /// <summary>
+    /// State responsible for loading and initializing the minigame configuration.
+    /// </summary>
     public class InitializeMiniGameSession : MiniGameSessionStateComponentBase
     {
-        [SerializeField] private AssetLabelReference _configurationAssetLabel;
+        #region Serialized Parameters
+
+        /// <summary>
+        /// Asset label reference for the MiniGameConfiguration ScriptableObject.
+        /// </summary>
+        [SerializeField]
+        private AssetLabelReference _configurationAssetLabel;
+
+        #endregion
+
+        #region State Logic
+
+        /// <summary>
+        /// Loads the minigame configuration using Addressables and initializes the miniGameSessionComponent.
+        /// </summary>
         public override IEnumerator OnEnter(IStateMachine stateMachine)
         {
             yield return base.OnEnter(stateMachine);
-            
-            AsyncOperationHandle<MiniGameConfiguration> loadAssetAsync = Addressables.LoadAssetAsync<MiniGameConfiguration>(_configurationAssetLabel);
+
+            AsyncOperationHandle<MiniGameConfiguration> loadAssetAsync =
+                Addressables.LoadAssetAsync<MiniGameConfiguration>(_configurationAssetLabel);
             yield return loadAssetAsync;
 
             if (loadAssetAsync.Result == null)
@@ -23,7 +41,8 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.StateMachine.S
             }
 
             yield return miniGameSessionComponent.Initialize(loadAssetAsync.Result);
-
         }
+
+        #endregion
     }
 }

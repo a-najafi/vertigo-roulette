@@ -10,13 +10,37 @@ namespace BasicSMEditor
     using UnityEditor;
     using UnityEngine;
 
+    /// <summary>
+    /// Custom editor for StateMachineComponentBase.
+    /// Provides a rich inspector for managing state configurations and transitions.
+    /// </summary>
     [CustomEditor(typeof(StateMachineComponentBase), true)]
     public class StateMachineComponentEditor : Editor
     {
+        #region Non Serialized Parameters
+
+        /// <summary>
+        /// Serialized property for the list of state configurations.
+        /// </summary>
         private SerializedProperty _stateConfigurationsProp;
+
+        /// <summary>
+        /// List of available transition types for new state configurations.
+        /// </summary>
         private static List<Type> _transitionTypes;
+
+        /// <summary>
+        /// Display names of transition types.
+        /// </summary>
         private static string[] _transitionTypeNames;
 
+        #endregion
+
+        #region Unity Methods
+
+        /// <summary>
+        /// Initializes cached references and type arrays on enable.
+        /// </summary>
         private void OnEnable()
         {
             _stateConfigurationsProp = serializedObject.FindProperty("_serializedStateConfigurations");
@@ -29,6 +53,13 @@ namespace BasicSMEditor
             _transitionTypeNames = _transitionTypes.Select(t => t.Name).ToArray();
         }
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Draws the custom inspector interface for StateMachineComponentBase.
+        /// </summary>
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
@@ -82,6 +113,14 @@ namespace BasicSMEditor
             serializedObject.ApplyModifiedProperties();
         }
 
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Draws the default inspector, excluding specified properties.
+        /// </summary>
+        /// <param name="excludedProps">Property names to exclude.</param>
         private void DrawDefaultInspectorExcluding(params string[] excludedProps)
         {
             SerializedProperty prop = serializedObject.GetIterator();
@@ -96,6 +135,8 @@ namespace BasicSMEditor
                 enterChildren = false;
             }
         }
+
+        #endregion
     }
 #endif
 
