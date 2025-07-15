@@ -7,39 +7,68 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
 {
+    /// <summary>
+    /// Represents a single inventory item, with unique ID and quantity.
+    /// </summary>
     [Serializable]
     public class PlayerInventoryItem
     {
-        [SerializeField]private string _itemUniqueId = "Invalid";
-        [SerializeField]private int _count = 0;
+        #region Serialized Parameters
+
+        [SerializeField] private string _itemUniqueId = "Invalid";
+        [SerializeField] private int _count = 0;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// The unique identifier for this item.
+        /// </summary>
         public string ItemUniqueId => _itemUniqueId;
+
+        /// <summary>
+        /// The count/amount of this item in inventory.
+        /// </summary>
         public int Count
         {
             get => _count;
             set => _count = value;
         }
 
-        public PlayerInventoryItem()
-        {
-            
-        }
+        #endregion
+
+        #region Constructors
+
+        public PlayerInventoryItem() { }
 
         public PlayerInventoryItem(string itemUniqueId, int count)
         {
             _itemUniqueId = itemUniqueId;
             _count = count;
         }
-        
-        
+
+        #endregion
     }
-    
+
+    /// <summary>
+    /// Manages the player's collection of inventory items.
+    /// Provides helpers for item lookups, modification, and clearing.
+    /// </summary>
     [Serializable]
     public class PlayerInventory
     {
-        
-        [SerializeField]private List<PlayerInventoryItem> playerInventoryItems = new List<PlayerInventoryItem>();
+        #region Serialized Parameters
 
+        [SerializeField] private List<PlayerInventoryItem> playerInventoryItems = new List<PlayerInventoryItem>();
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Checks if the inventory contains at least one of the given item.
+        /// </summary>
         public bool HasItem(string itemUniqueId)
         {
             int playerInventoryCount = playerInventoryItems.Count;
@@ -51,6 +80,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
             return false;
         }
 
+        /// <summary>
+        /// Gets the PlayerInventoryItem for a given unique ID, or null if not present.
+        /// </summary>
         public PlayerInventoryItem GetPlayerInventoryItem(string itemUniqueId)
         {
             int playerInventoryCount = playerInventoryItems.Count;
@@ -62,11 +94,17 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
             return null;
         }
 
+        /// <summary>
+        /// Returns a list of all items in the inventory.
+        /// </summary>
         public List<PlayerInventoryItem> GetInventoryItems()
         {
             return playerInventoryItems;
         }
 
+        /// <summary>
+        /// Increases the counts for items using another inventory as the source.
+        /// </summary>
         public void IncreaseCountByInventory(PlayerInventory playerInventory)
         {
             List<PlayerInventoryItem> inventoryItems = playerInventory.playerInventoryItems;
@@ -75,7 +113,10 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
                 IncreaseCount(inventoryItems[i].ItemUniqueId, inventoryItems[i].Count);
             }
         }
-        
+
+        /// <summary>
+        /// Decreases the counts for items using another inventory as the source.
+        /// </summary>
         public void DecreaseCountByInventory(PlayerInventory playerInventory)
         {
             List<PlayerInventoryItem> inventoryItems = playerInventory.playerInventoryItems;
@@ -85,6 +126,9 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
             }
         }
 
+        /// <summary>
+        /// Increases the count of a specific item by amount. Adds new entry if missing.
+        /// </summary>
         public void IncreaseCount(string itemUniqueId, int amount)
         {
             PlayerInventoryItem playerInventoryItem = GetPlayerInventoryItem(itemUniqueId);
@@ -95,7 +139,11 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
             }
             playerInventoryItem.Count += amount;
         }
-        
+
+        /// <summary>
+        /// Decreases the count of a specific item by amount. Removes entry if count reaches zero.
+        /// Returns false if not enough items to decrease.
+        /// </summary>
         public bool DecreaseCount(string itemUniqueId, int amount)
         {
             PlayerInventoryItem playerInventoryItem = GetPlayerInventoryItem(itemUniqueId);
@@ -107,11 +155,14 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.Inventory
             return true;
         }
 
+        /// <summary>
+        /// Removes all items from inventory.
+        /// </summary>
         public void ClearInventory()
         {
             playerInventoryItems.Clear();
         }
-        
-        
+
+        #endregion
     }
 }

@@ -1,23 +1,40 @@
-using System.Collections;
-using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
-using Utility.Addressable;
+using Utility.PropertyAttributes;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession
 {
+    /// <summary>
+    /// MonoBehaviour wrapper for the runtime player session data.
+    /// </summary>
     public class PlayerSessionComponent : MonoBehaviour
     {
-        [ReadOnly]private PlayerSession _playerSession;
-        
+        #region Non-Serialized Parameters
+
+        [ReadOnly]
+        private PlayerSession _playerSession;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// The current runtime PlayerSession instance.
+        /// </summary>
         public PlayerSession Session => _playerSession;
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Initializes this component with a PlayerSession instance.
+        /// </summary>
+        /// <param name="playerSession">The PlayerSession data to use.</param>
         public void Initialize(PlayerSession playerSession)
         {
             _playerSession = playerSession;
         }
-        
-       
-        
+
+        #endregion
     }
 }

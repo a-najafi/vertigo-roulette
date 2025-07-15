@@ -6,16 +6,33 @@ using VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.UI;
 
 namespace VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.States
 {
-    public class InitializeActiveZoneDisplay: MiniGameSessionStateComponentBase
+    /// <summary>
+    /// State that initializes the roulette for the currently active zone display.
+    /// </summary>
+    public class InitializeActiveZoneDisplay : MiniGameSessionStateComponentBase
     {
-        [SerializeField] private ZoneMapDisplayComponent zoneMapDisplayComponent;
+        #region Serialized Parameters
+
+        /// <summary>
+        /// Reference to the ZoneMapDisplayComponent that manages zone UIs.
+        /// </summary>
+        [SerializeField]
+        private ZoneMapDisplayComponent zoneMapDisplayComponent;
+
+        #endregion
+
+        #region State Logic
+
+        /// <summary>
+        /// Calls InitializeRoulette on the active zone display during state entry.
+        /// </summary>
         public override IEnumerator OnEnter(IStateMachine stateMachine)
         {
             yield return base.OnEnter(stateMachine);
 
             yield return zoneMapDisplayComponent.GetActiveZoneDisplay().InitializeRoulette();
-            
-
         }
+
+        #endregion
     }
 }
