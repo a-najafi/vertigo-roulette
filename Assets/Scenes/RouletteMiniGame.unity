@@ -1423,31 +1423,31 @@ MonoBehaviour:
   _serializedStateConfigurations:
   - _stateGameObject: {fileID: 752437988}
     _serializedTransitions:
-    - rid: 1629599639801954304
+    - rid: 1629599723956994078
   - _stateGameObject: {fileID: 1026406658}
     _serializedTransitions:
-    - rid: 1629599692983107584
+    - rid: 1629599723956994079
   - _stateGameObject: {fileID: 278045160}
     _serializedTransitions:
-    - rid: 1629599692983107585
+    - rid: 1629599723956994080
   - _stateGameObject: {fileID: 1017021554}
     _serializedTransitions:
-    - rid: 1629599692983107586
-    - rid: 1629599723795251200
-    - rid: 1629599723956994053
+    - rid: 1629599723956994081
+    - rid: 1629599723956994082
+    - rid: 1629599723956994083
   - _stateGameObject: {fileID: 1406763329}
     _serializedTransitions:
-    - rid: 1629599692983107587
+    - rid: 1629599723956994084
   - _stateGameObject: {fileID: 213675039}
     _serializedTransitions:
     - rid: 1629599723956994052
-    - rid: 1629599692983107588
+    - rid: 1629599723956994075
   - _stateGameObject: {fileID: 1776898246}
     _serializedTransitions:
-    - rid: 1629599692983107589
+    - rid: 1629599723956994085
   - _stateGameObject: {fileID: 1787988751}
     _serializedTransitions:
-    - rid: 1629599723795251201
+    - rid: 1629599723956994086
   - _stateGameObject: {fileID: 344559067}
     _serializedTransitions: []
   currentStateIndex: 0
@@ -1455,55 +1455,56 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1629599639801954304
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 1026406658}
-    - rid: 1629599692983107584
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 278045160}
-    - rid: 1629599692983107585
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 1017021554}
-    - rid: 1629599692983107586
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 1406763329}
-        _button: {fileID: 1162986144}
-    - rid: 1629599692983107587
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 213675039}
-    - rid: 1629599692983107588
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 1776898246}
-    - rid: 1629599692983107589
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 278045160}
-    - rid: 1629599723795251200
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 1787988751}
-        _button: {fileID: 1871196602}
-    - rid: 1629599723795251201
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 1017021554}
-        _button: {fileID: 844000885}
     - rid: 1629599723956994052
       type: {class: ActiveZoneStateTransition, ns: VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.Transitions, asm: VertigoRouletteMiniGame}
       data:
         targetStateGameObject: {fileID: 344559067}
         _requiredZoneState: 2
-    - rid: 1629599723956994053
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
+    - rid: 1629599723956994075
+      type: {class: ActiveZoneStateTransition, ns: VertigoRouletteMiniGame.ApplicationFlow.MiniGameSession.ZoneMap.Transitions, asm: VertigoRouletteMiniGame}
+      data:
+        targetStateGameObject: {fileID: 1776898246}
+        _requiredZoneState: 0
+    - rid: 1629599723956994078
+      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 1026406658}
+    - rid: 1629599723956994079
+      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 278045160}
+    - rid: 1629599723956994080
+      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 1017021554}
+    - rid: 1629599723956994081
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 1406763329}
+        _button: {fileID: 1162986144}
+    - rid: 1629599723956994082
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
       data:
         targetStateGameObject: {fileID: 344559067}
         _button: {fileID: 1899200974}
+    - rid: 1629599723956994083
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 1787988751}
+        _button: {fileID: 1871196602}
+    - rid: 1629599723956994084
+      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 213675039}
+    - rid: 1629599723956994085
+      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 278045160}
+    - rid: 1629599723956994086
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 1017021554}
+        _button: {fileID: 844000885}
 --- !u!4 &1802836206
 Transform:
   m_ObjectHideFlags: 0

@@ -1554,45 +1554,45 @@ MonoBehaviour:
   _serializedStateConfigurations:
   - _stateGameObject: {fileID: 1451860651}
     _serializedTransitions:
-    - rid: 1629599588311891970
-    - rid: 1629599610321240064
-    - rid: 1629599610321240065
+    - rid: 1629599723956994061
+    - rid: 1629599723956994062
+    - rid: 1629599723956994063
   - _stateGameObject: {fileID: 1500827142}
     _serializedTransitions: []
   - _stateGameObject: {fileID: 2126174983}
     _serializedTransitions:
-    - rid: 1629599723956994054
+    - rid: 1629599723956994064
   - _stateGameObject: {fileID: 295880407}
     _serializedTransitions:
-    - rid: 1629599723956994049
+    - rid: 1629599723956994065
   currentStateIndex: 0
   references:
     version: 2
     RefIds:
-    - rid: 1629599588311891970
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
+    - rid: 1629599723956994061
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
       data:
         targetStateGameObject: {fileID: 1500827142}
         _button: {fileID: 182949220}
-    - rid: 1629599610321240064
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 295880407}
-        _button: {fileID: 917555058}
-    - rid: 1629599610321240065
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
+    - rid: 1629599723956994062
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
       data:
         targetStateGameObject: {fileID: 2126174983}
         _button: {fileID: 348865105}
-    - rid: 1629599723956994049
-      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
+    - rid: 1629599723956994063
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 295880407}
+        _button: {fileID: 917555058}
+    - rid: 1629599723956994064
+      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
+      data:
+        targetStateGameObject: {fileID: 1451860651}
+    - rid: 1629599723956994065
+      type: {class: OnButtonClickedStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
       data:
         targetStateGameObject: {fileID: 1451860651}
         _button: {fileID: 1564177632}
-    - rid: 1629599723956994054
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
-      data:
-        targetStateGameObject: {fileID: 1451860651}
 --- !u!1 &2076378511
 GameObject:
   m_ObjectHideFlags: 0

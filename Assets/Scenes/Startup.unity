@@ -206,7 +206,7 @@ MonoBehaviour:
   _serializedStateConfigurations:
   - _stateGameObject: {fileID: 1917443879}
     _serializedTransitions:
-    - rid: 1629599554937290755
+    - rid: 1629599723956994067
   - _stateGameObject: {fileID: 182483581}
     _serializedTransitions: []
   currentStateIndex: 0
@@ -214,8 +214,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1629599554937290755
-      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions, asm: BasicSMExtensions}
+    - rid: 1629599723956994067
+      type: {class: AlwaysTrueStateTransition, ns: BasicSMExtensions.StateTransitions, asm: BasicSMExtensions}
       data:
         targetStateGameObject: {fileID: 182483581}
 --- !u!4 &553982595
