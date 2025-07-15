@@ -67,7 +67,7 @@ namespace VertigoRouletteMiniGame.ApplicationFlow.PlayerSession.StateMachine.Sta
                 playerSession.Inventory.IncreaseCount(playerSessionStartingConfig.PlayerInventoryItemDesigns[i].ItemDefinitionAssetReference.AssetGUID,playerSessionStartingConfig.PlayerInventoryItemDesigns[i].Count);
             }
             yield return PlayerSession.SavePlayerSession(playerSession, SavePaths.PlayerSession);
-
+            playerSessionComponent.Initialize(playerSession);
         }
 
       
